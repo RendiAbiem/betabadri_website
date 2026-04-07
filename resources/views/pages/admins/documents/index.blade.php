@@ -7,11 +7,20 @@
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
     <div>
         <h4 class="text-white fw-bold mb-1">Pusat Dokumen</h4>
-        <p class="text-secondary small mb-0">Arsip digital, laporan, dan catatan operasional dalam bentuk sticky notes.</p>
+        <p class="text-secondary small mb-0">Arsip digital dan catatan operasional bergaya sticky notes.</p>
     </div>
-    <div>
+    <div class="d-flex gap-2">
+        {{-- Form Pencarian Cepat --}}
+        <form action="{{ route('admin.documents.index') }}" method="GET" class="d-none d-md-flex">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control form-control-dark rounded-start-pill ps-3" placeholder="Cari catatan..." value="{{ request('search') }}">
+                <button class="btn btn-dark border-secondary border-opacity-25 rounded-end-pill px-3" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
         <button class="btn btn-primary fw-bold shadow-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#uploadModal">
-            <i class="fas fa-plus me-2"></i> Buat Catatan Baru
+            <i class="fas fa-plus me-2"></i> Buat Catatan
         </button>
     </div>
 </div>
@@ -24,12 +33,11 @@
     </div>
 @endif
 
-{{-- FILTER KATEGORI --}}
+{{-- FILTER KATEGORI DINAMIS --}}
 <div class="d-flex flex-wrap gap-2 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
-    <a href="{{ route('admin.documents.index') }}" class="btn btn-sm rounded-pill {{ !request('category') ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-white' }}">Semua Catatan</a>
+    <a href="{{ route('admin.documents.index') }}" class="btn btn-sm rounded-pill {{ !request('category') ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-white' }}">Semua</a>
 
-    @php $categories = ['Laporan', 'SOP', 'Legal', 'Media', 'Lainnya']; @endphp
-    @foreach($categories as $cat)
+    @foreach($uniqueCategories as $cat)
         <a href="{{ route('admin.documents.index', ['category' => $cat]) }}"
            class="btn btn-sm rounded-pill {{ request('category') == $cat ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-white' }}">
             {{ $cat }}
@@ -41,7 +49,6 @@
 <div class="row g-4">
     @forelse($documents as $doc)
         @php
-            // Mapping warna sticky note
             $colors = [
                 'yellow' => ['bg' => '#fef3c7', 'text' => '#92400e', 'border' => '#fcd34d', 'badge' => '#fbbf24'],
                 'blue'   => ['bg' => '#e0f2fe', 'text' => '#075985', 'border' => '#bae6fd', 'badge' => '#7dd3fc'],
@@ -50,28 +57,28 @@
             ];
             $style = $colors[$doc->color] ?? $colors['yellow'];
 
-            // Logika Icon File
-            $ext = strtolower($doc->file_type);
-            $icon = 'fa-file-alt';
-            if(in_array($ext, ['pdf'])) $icon = 'fa-file-pdf';
-            elseif(in_array($ext, ['doc', 'docx'])) $icon = 'fa-file-word';
-            elseif(in_array($ext, ['xls', 'xlsx'])) $icon = 'fa-file-excel';
-            elseif(in_array($ext, ['png', 'jpg', 'jpeg'])) $icon = 'fa-file-image';
-            elseif(in_array($ext, ['zip', 'rar'])) $icon = 'fa-file-archive';
+            // Logika Icon File jika ada
+            $icon = 'fa-sticky-note';
+            if($doc->file_path){
+                $ext = strtolower($doc->file_type);
+                if(in_array($ext, ['pdf'])) $icon = 'fa-file-pdf';
+                elseif(in_array($ext, ['doc', 'docx'])) $icon = 'fa-file-word';
+                elseif(in_array($ext, ['xls', 'xlsx'])) $icon = 'fa-file-excel';
+                elseif(in_array($ext, ['png', 'jpg', 'jpeg'])) $icon = 'fa-file-image';
+                elseif(in_array($ext, ['zip', 'rar'])) $icon = 'fa-file-archive';
+            }
         @endphp
 
         <div class="col-12 col-sm-6 col-md-4 col-xl-3">
-            <div class="sticky-note p-4 shadow-sm position-relative"
+            <div class="sticky-note p-4 shadow-sm position-relative h-100 d-flex flex-column"
                  style="background-color: {{ $style['bg'] }}; border-left: 6px solid {{ $style['border'] }};">
 
-                {{-- Pin Decor --}}
                 <div class="position-absolute top-0 start-50 translate-middle">
                     <i class="fas fa-thumbtack text-danger opacity-75 shadow-sm" style="font-size: 1.1rem;"></i>
                 </div>
 
-                {{-- Judul & Badge --}}
                 <div class="mb-3">
-                    <span class="badge rounded-pill mb-2" style="background-color: {{ $style['badge'] }}; color: {{ $style['text'] }}; font-size: 0.6rem; letter-spacing: 0.5px;">
+                    <span class="badge rounded-pill mb-2" style="background-color: {{ $style['badge'] }}; color: {{ $style['text'] }}; font-size: 0.6rem;">
                         {{ strtoupper($doc->category) }}
                     </span>
                     <h6 class="fw-bold mb-1" style="color: {{ $style['text'] }}; line-height: 1.4;">
@@ -79,24 +86,24 @@
                     </h6>
                 </div>
 
-                {{-- Isi Catatan / Deskripsi --}}
-                <div class="mb-4" style="color: {{ $style['text'] }}; opacity: 0.85; font-size: 0.85rem; font-style: italic; min-height: 50px;">
-                    {!! nl2br(e($doc->description)) ?: 'Tidak ada deskripsi tambahan.' !!}
+                <div class="mb-4 flex-grow-1" style="color: {{ $style['text'] }}; opacity: 0.85; font-size: 0.85rem; font-style: italic;">
+                    {!! nl2br(e($doc->description)) ?: 'Tidak ada deskripsi.' !!}
                 </div>
 
-                {{-- Lampiran & Aksi --}}
                 <div class="mt-auto pt-3 border-top border-dark border-opacity-10 d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center overflow-hidden">
                         <i class="fas {{ $icon }} me-2 fs-5" style="color: {{ $style['text'] }};"></i>
                         <span class="x-small fw-bold text-uppercase text-truncate" style="color: {{ $style['text'] }}; max-width: 80px;">
-                            .{{ $doc->file_type }}
+                            {{ $doc->file_path ? '.' . $doc->file_type : 'CATATAN' }}
                         </span>
                     </div>
 
                     <div class="d-flex gap-1">
-                        <a href="{{ route('admin.documents.download', $doc->id) }}" class="btn btn-sm p-1" title="Unduh Lampiran" style="color: {{ $style['text'] }};">
+                        @if($doc->file_path)
+                        <a href="{{ route('admin.documents.download', $doc->id) }}" class="btn btn-sm p-1" title="Unduh File" style="color: {{ $style['text'] }};">
                             <i class="fas fa-download"></i>
                         </a>
+                        @endif
 
                         @if(auth()->user()->role === 'admin' || $doc->user_id === auth()->id())
                         <form action="{{ route('admin.documents.destroy', $doc->id) }}" method="POST" class="d-inline">
@@ -118,13 +125,12 @@
         <div class="col-12 text-center py-5">
             <div class="opacity-25 text-white">
                 <i class="fas fa-sticky-note fa-4x mb-3"></i>
-                <h6>Belum ada catatan yang ditempel.</h6>
+                <h6>Belum ada catatan di kategori ini.</h6>
             </div>
         </div>
     @endforelse
 </div>
 
-{{-- PAGINATION --}}
 <div class="mt-5">
     {{ $documents->appends(request()->query())->links('pagination::bootstrap-5') }}
 </div>
@@ -134,16 +140,17 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="background-color: #1e293b;">
             <div class="modal-header border-bottom border-secondary border-opacity-25 p-4">
-                <h5 class="modal-title text-white fw-bold"><i class="fas fa-pen-fancy text-primary me-2"></i> Tulis Catatan Dokumen</h5>
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-pen-fancy text-primary me-2"></i> Buat Sticky Note</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
             <form action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="text-white-50 small text-uppercase fw-bold mb-2">Pilih Warna Note</label>
-                        <div class="d-flex gap-3 align-items-center bg-dark bg-opacity-50 p-3 rounded border border-secondary border-opacity-25">
+                    {{-- Warna --}}
+                    <div class="mb-4 text-center">
+                        <label class="text-white-50 small text-uppercase fw-bold d-block mb-3">Pilih Warna Note</label>
+                        <div class="d-flex justify-content-center gap-4">
                             <label class="color-option">
                                 <input type="radio" name="color" value="yellow" checked>
                                 <span class="dot" style="background-color: #fcd34d;"></span>
@@ -164,33 +171,29 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="text-white-50 small text-uppercase fw-bold mb-2">Judul Catatan <span class="text-danger">*</span></label>
-                        <input type="text" name="title" class="form-control form-control-dark" placeholder="Judul singkat..." required>
+                        <label class="text-white-50 small text-uppercase fw-bold mb-2">Judul <span class="text-danger">*</span></label>
+                        <input type="text" name="title" class="form-control form-control-dark" placeholder="Apa yang ingin dicatat?" required>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="text-white-50 small text-uppercase fw-bold mb-2">Kategori <span class="text-danger">*</span></label>
-                            <select name="category" class="form-control form-control-dark" required>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat }}">{{ $cat }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" name="category" class="form-control form-control-dark" placeholder="Misal: Urgent" required>
                         </div>
                         <div class="col-6">
-                            <label class="text-white-50 small text-uppercase fw-bold mb-2">File Lampiran <span class="text-danger">*</span></label>
-                            <input type="file" name="file" class="form-control form-control-dark text-secondary" required>
+                            <label class="text-white-50 small text-uppercase fw-bold mb-2">Lampiran File (Opsional)</label>
+                            <input type="file" name="file" class="form-control form-control-dark text-secondary">
                         </div>
                     </div>
 
                     <div class="mb-0">
-                        <label class="text-white-50 small text-uppercase fw-bold mb-2">Isi Catatan</label>
-                        <textarea name="description" class="form-control form-control-dark" rows="4" placeholder="Tulis instruksi atau keterangan dokumen di sini..."></textarea>
+                        <label class="text-white-50 small text-uppercase fw-bold mb-2">Deskripsi / Detail Catatan</label>
+                        <textarea name="description" class="form-control form-control-dark" rows="4" placeholder="Tulis catatan di sini..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer border-top border-secondary border-opacity-25 p-4">
                     <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary px-4 fw-bold rounded-pill">Tempel Catatan</button>
+                    <button type="submit" class="btn btn-primary px-4 fw-bold rounded-pill shadow">Simpan Catatan</button>
                 </div>
             </form>
         </div>
@@ -200,17 +203,15 @@
 <style>
     .sticky-note {
         min-height: 250px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        cursor: default;
-        transform: rotate(-1deg);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: rotate(-1.5deg);
     }
-
-    .sticky-note:nth-child(even) { transform: rotate(1.5deg); }
-    .sticky-note:nth-child(3n) { transform: rotate(-1.2deg); }
+    .sticky-note:nth-child(even) { transform: rotate(1.2deg); }
+    .sticky-note:nth-child(3n) { transform: rotate(-0.8deg); }
 
     .sticky-note:hover {
-        transform: rotate(0deg) scale(1.05) !important;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+        transform: rotate(0deg) scale(1.04) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important;
         z-index: 5;
     }
 
@@ -221,25 +222,23 @@
         right: 0;
         border-width: 15px 15px 0 0;
         border-style: solid;
-        border-color: rgba(0,0,0,0.08) #0f172a;
-        display: block;
-        width: 0;
+        border-color: rgba(0,0,0,0.1) #0f172a;
     }
 
-    /* Color Radio Options */
     .color-option { cursor: pointer; }
     .color-option input { display: none; }
     .color-option .dot {
         display: inline-block;
-        width: 25px;
-        height: 25px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        border: 3px solid transparent;
-        transition: all 0.2s;
+        border: 4px solid transparent;
+        transition: all 0.3s;
     }
     .color-option input:checked + .dot {
         border-color: #fff;
-        transform: scale(1.2);
+        transform: scale(1.3);
+        box-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
 </style>
 
