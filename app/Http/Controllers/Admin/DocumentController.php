@@ -37,9 +37,10 @@ class DocumentController extends Controller
             'user_id' => auth()->id(),
             'title' => $request->title,
             'category' => $request->category,
+            'color' => $request->color ?? 'yellow', // Default warna kuning khas sticky note
             'file_path' => $path,
             'file_type' => $file->getClientOriginalExtension(),
-            'file_size' => round($file->getSize() / 1024), // Simpan dalam bentuk KB
+            'file_size' => round($file->getSize() / 1024),
             'description' => $request->description,
         ]);
 
