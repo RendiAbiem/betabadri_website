@@ -1,0 +1,222 @@
+/* =========================================
+   PROGRAM DETAIL PAGE
+   ========================================= */
+
+.program-hero {
+    /* 1. POSISI BACKGROUND (Wajib Paling Atas) */
+    margin-top: 0 !important; /* Jangan diturunkan! Background harus di belakang navbar */
+    position: relative;
+    top: 0;
+
+    /* 2. UKURAN & GAMBAR */
+    width: 100%;
+    min-height: 100vh; /* Memenuhi satu layar penuh */
+
+    background-size: cover !important; /* Memaksa gambar melebar (tidak ubin/kotak-kotak) */
+    background-position: center center !important;
+    background-repeat: no-repeat !important; /* Mencegah gambar berulang */
+
+    /* 3. POSISI TEKS (PADDING) */
+    /* Ini kuncinya: Dorong TEKS ke bawah sejauh 250px agar melewati Logo Jumbo */
+    padding-top: 250px;
+    padding-bottom: 100px;
+}
+
+.program-bg-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, rgba(8, 15, 31, 0.95) 40%, rgba(8, 15, 31, 0.7) 100%);
+    z-index: 1;
+}
+
+/* Animasi Gambar Melayang */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+.floating-anim {
+    animation: floating 4s ease-in-out infinite;
+}
+
+/* 2. BACKGROUND COLORS */
+.bg-navy-dark { background-color: #0b162c; }
+.bg-black-pearl { background-color: #080f1f; }
+
+/* 3. CHECKLIST ICON */
+.check-icon {
+    width: 30px; height: 30px;
+    background: rgba(0, 97, 242, 0.2);
+    color: #0061f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* 4. TOOLS GRID (Kotak-kotak Icon) */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.tool-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #b0b8c4;
+    transition: 0.3s;
+}
+
+.tool-item:hover {
+    background: #0061f2;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 97, 242, 0.3);
+    border-color: #0061f2;
+}
+
+/* 5. LEVEL CARD (Syllabus) */
+.level-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.3s;
+    height: 100%;
+}
+
+.level-card:hover {
+    border-color: #0061f2;
+    transform: translateY(-5px);
+}
+
+.level-header {
+    padding: 15px 25px;
+    font-weight: 700;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.bg-blue-soft { background: #0061f2; }
+.bg-purple-soft { background: #8b5cf6; }
+
+/* 6. NAV PILLS (TABS) */
+.nav-pills .nav-link {
+    color: #b0b8c4;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link:hover {
+    background-color: #0061f2;
+    color: white;
+    border-color: #0061f2;
+    box-shadow: 0 0 15px rgba(0, 97, 242, 0.4);
+}
+
+/* Responsif untuk HP (Logo lebih kecil, padding dikurangi) */
+@media (max-width: 991px) {
+    .program-hero {
+        /* Di HP logo mengecil (50px), jadi padding tidak perlu sebesar desktop */
+        padding-top: 150px;
+        min-height: auto; /* Tinggi fleksibel di HP */
+    }
+}
+
+/* =========================================
+   ALL PROGRAMS INDEX STYLE
+   ========================================= */
+
+/* Hiasan Garis Tengah Vertikal */
+.tech-line-vertical {
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #0061f2, transparent);
+    opacity: 0.3;
+}
+
+/* Icon Box Glow */
+.bg-warning-glow {
+    background: rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.bg-purple-glow {
+    background: rgba(139, 92, 246, 0.1);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+.bg-cyan-glow {
+    background: rgba(6, 182, 212, 0.1);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* Image Shadows */
+.shadow-lg-blue { box-shadow: 0 20px 50px rgba(0, 97, 242, 0.3); }
+.shadow-lg-purple { box-shadow: 0 20px 50px rgba(139, 92, 246, 0.3); }
+.shadow-lg-cyan { box-shadow: 0 20px 50px rgba(6, 182, 212, 0.3); }
+
+/* Custom Dark Table */
+.custom-table {
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    overflow: hidden; /* Biar border radius ngaruh ke tr/th */
+    background-color: rgba(255,255,255,0.02);
+}
+
+.custom-table th {
+    background-color: rgba(0,0,0,0.3);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.custom-table td {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #b0b8c4;
+    padding: 20px;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+.custom-table tr:hover td {
+    background-color: rgba(255,255,255,0.05);
+    color: white;
+}
+
+/* Glow Colors */
+.bg-red-glow { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }
+.bg-orange-glow { background: rgba(255, 159, 26, 0.15); border: 1px solid rgba(255, 159, 26, 0.3); }
+
+/* Shadow Colors */
+.shadow-lg-red { box-shadow: 0 10px 40px rgba(220, 53, 69, 0.3); }
+.shadow-lg-orange { box-shadow: 0 10px 40px rgba(255, 159, 26, 0.3); }
+
+/* Text Color Utility */
+.text-orange { color: #ff9f1a !important; }
+.text-purple { color: #a78bfa !important; }
+
+/* Icon Box Border-radius fix */
+.icon-box-tech {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-size: 1.5rem;
+}

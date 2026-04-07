@@ -1,0 +1,261 @@
+/* =========================================
+   DASHBOARD WIDGETS
+   ========================================= */
+
+/* 1. STAT CARD */
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Accents (Garis bawah halus) */
+.bg-blue-gradient::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #0061f2;
+}
+.bg-purple-gradient::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #8b5cf6;
+}
+.bg-cyan-gradient::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #06b6d4;
+}
+.bg-green-gradient::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #10b981;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+/* 2. CONTENT CARD */
+.content-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+}
+.bg-navy-lighter {
+    background: #25334d; /* Warna selingan untuk card info */
+}
+
+/* 3. TABLE DARK CUSTOM */
+.table-dark-custom {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-secondary);
+    --bs-table-border-color: rgba(255, 255, 255, 0.05);
+}
+.table-dark-custom thead th {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-bottom-width: 2px;
+}
+.table-dark-custom td {
+    font-size: 0.9rem;
+    padding: 15px 10px;
+}
+
+/* 4. PROFILE PIC SMALL */
+.profile-pic-sm {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.bg-purple {
+    background-color: #8b5cf6;
+}
+
+/* --- Dashboard Specific --- */
+
+/* Highlight Pelamar Baru (Merah Menyala) */
+.bg-red-glow {
+    background: rgba(220, 53, 69, 0.05); /* Merah Transparan */
+    box-shadow: 0 0 15px rgba(220, 53, 69, 0.2);
+}
+
+.bg-orange-gradient::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #f59e0b;
+}
+
+/* Card Header Text Size */
+.ls-1 {
+    letter-spacing: 1px;
+}
+
+/* Quick Action Button */
+.btn-outline-light.bg-navy-lighter {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #e2e8f0;
+    transition: 0.2s;
+}
+.btn-outline-light.bg-navy-lighter:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px); /* Geser sedikit saat hover */
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Label Form Diperbesar & Dipertegas */
+.form-label-tech {
+    font-size: 0.85rem; /* Ukuran naik dari 0.7rem */
+    font-weight: 800;
+    color: #f8fafc; /* Warna lebih terang (Off-white) agar kontras */
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+    display: block;
+    text-transform: uppercase;
+}
+
+/* Input Group Icon juga diperbesar */
+.input-group-text-tech {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 0;
+    border-radius: 12px 0 0 12px;
+    padding: 0 1.25rem;
+    color: #4361ee;
+    font-size: 1.1rem; /* Icon lebih besar */
+    display: flex;
+    align-items: center;
+}
+
+/* Field Input dipertebal */
+.form-select-tech,
+.form-control-tech {
+    background-color: #0b1120;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: 12px;
+    padding: 0.75rem 1rem; /* Padding lebih dalam agar lebih lega */
+    transition: 0.3s;
+    width: 100%;
+    font-size: 1rem; /* Ukuran teks input standar 16px */
+}
+
+/* Tabel Header Label */
+.table-dark-custom thead tr th {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #94a3b8;
+}
+
+/* Fokus State */
+.form-control-tech:focus,
+.form-select-tech:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 5px rgba(67, 97, 238, 0.2);
+    background-color: #0f172a;
+}
+
+.row-number {
+    font-size: 1.1rem;
+    color: #4361ee !important;
+}
+
+/* Gradient Biru (Primary) */
+.bg-blue-gradient {
+    background: linear-gradient(45deg, #4361ee, #3f37c9);
+    color: white;
+}
+
+/* Gradient Hijau (Success) */
+.bg-green-gradient {
+    background: linear-gradient(45deg, #10b981, #059669);
+    color: white;
+}
+
+/* Gradient Cyan/Tosca (Info) */
+.bg-cyan-gradient {
+    background: linear-gradient(45deg, #06b6d4, #0891b2);
+    color: white;
+}
+
+/* Gradient Ungu (Purple) */
+.bg-purple-gradient {
+    background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+/* Styling Tambahan untuk Card */
+.stat-card {
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Icon bulat transparan */
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    backdrop-filter: blur(5px); /* Efek kaca buram */
+}

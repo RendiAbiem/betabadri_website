@@ -1,0 +1,72 @@
+/* =========================================
+   VISI MISI PAGE (UPDATED STYLE)
+   ========================================= */
+
+/* 1. HERO BACKGROUND */
+/* Pastikan file bg-visi.jpg tersedia */
+
+/* 2. VISION DECORATION */
+.vision-img-wrapper {
+    position: relative;
+    padding: 15px;
+}
+.decoration-box-border {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 2px solid rgba(0, 97, 242, 0.3);
+    border-radius: 25px;
+    z-index: 1;
+    transform: translate(-15px, -15px);
+}
+
+/* 3. MISSION CARD (ICON STYLE) */
+.mission-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transisi lebih smooth (efek membal sedikit) */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Saat Hover Kartu */
+.mission-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(0, 97, 242, 0.5);
+    /* UBAH DISINI: Gerakan ke atas dikurangi biar ga terlalu offset */
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Style Dasar Ikon */
+.mission-icon {
+    transition: all 0.4s ease;
+    /* Tambahkan filter brightness default agar transisi warnanya mulus */
+    filter: brightness(1);
+}
+
+/* Saat Hover Kartu -> Efek ke Ikon */
+.mission-card:hover .mission-icon {
+    /* HAPUS: transform: scale(1.1); */
+
+    /* GANTI DENGAN INI: Ikon ikut naik sedikit dan jadi lebih terang/bercahaya */
+    transform: translateY(-5px);
+    filter: brightness(1.3); /* Membuat warna ikon jadi "menyala" */
+    /* Opsional: Tambah sedikit rotasi jika mau lebih dinamis */
+    /* transform: translateY(-5px) rotate(5deg); */
+}
+
+/* Warna Text Khusus (Tetap sama) */
+.text-purple { color: #8b5cf6 !important; }
+.text-warning { color: #f59e0b !important; }
+.text-success { color: #10b981 !important; }
+.text-danger { color: #ef4444 !important; }
+
+/* 4. BLOCKQUOTE VISI */
+blockquote {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}

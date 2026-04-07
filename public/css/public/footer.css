@@ -1,0 +1,96 @@
+/* =========================================
+   FOOTER THEME (DARK TECH)
+   ========================================= */
+
+.site-footer {
+    background-color: #0b162c; /* Warna Navy Gelap (Sama seperti navbar mobile) */
+    color: #ffffff;
+    border-top: 5px solid #0061f2; /* Garis aksen biru di atas */
+    font-size: 14px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Style Logo Footer */
+.logo-footer {
+    height: 160px; /* Ukuran Logo Proporsional */
+    width: auto;
+    /* Logo Silver terlihat bagus di background gelap, tidak perlu filter */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    margin-bottom: 10px;
+}
+
+/* Judul Kolom (Links, Program, dll) */
+.site-footer h5 {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+/* Garis kecil di bawah judul */
+.site-footer h5::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    background-color: #0061f2; /* Tech Blue */
+    border-radius: 2px;
+}
+
+/* Link Navigasi Footer */
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #b0b8c4; /* Abu-abu terang */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Efek Hover Link (Geser kanan + Ubah warna) */
+.footer-links a:hover {
+    color: #38bdf8; /* Cyan terang */
+    transform: translateX(5px);
+}
+
+/* Icon Kontak */
+.contact-info i {
+    color: #0061f2 !important; /* Icon Biru */
+    font-size: 16px;
+    width: 20px; /* Lebar tetap agar teks rata */
+}
+
+/* Tombol Sosial Media (Lingkaran) */
+.social-btn {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.05); /* Transparan halus */
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.social-btn:hover {
+    background-color: #0061f2; /* Hover jadi Biru Tech */
+    border-color: #0061f2;
+    color: #ffffff;
+    transform: translateY(-3px); /* Naik sedikit */
+    box-shadow: 0 5px 15px rgba(0, 97, 242, 0.4); /* Glowing effect */
+}
+
+/* Copyright Text */
+.copyright {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.6;
+}

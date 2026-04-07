@@ -1,0 +1,1909 @@
+/* ==========================================================================
+   1. GLOBAL VARIABLES & UTILITIES
+   ========================================================================== */
+:root {
+    --primary-tech: #4361ee;
+    --secondary-tech: #4cc9f0;
+    --dark-bg: #0b0a1d;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --navbar-height: 100px; /* Variabel pusat untuk tinggi navbar */
+}
+
+.text-gradient {
+    background: linear-gradient(
+        90deg,
+        var(--primary-tech),
+        var(--secondary-tech)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   MAIN HERO (ULTIMATE COVER FIX)
+   ========================================================================== */
+.main-hero {
+    position: relative;
+    height: 90vh; /* Sisakan sedikit ruang di bawah agar user tahu bisa di-scroll */
+    width: 100vw; /* Paksa lebar sesuai layar mata memandang */
+    margin-left: calc(
+        -50vw + 50%
+    ); /* Trik untuk memaksa elemen keluar dari container jika terjebak */
+    margin-right: calc(-50vw + 50%);
+    overflow: hidden;
+    background-color: var(--dark-bg);
+}
+
+/* Teknik Stretch: Menghilangkan transform translate agar tidak terjadi offset ke kanan */
+.hero-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* Menjaga rasio video agar tidak gepeng */
+    z-index: 1;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradasi gelap di kiri agar teks putih lebih kontras */
+    background: linear-gradient(
+        to right,
+        rgba(11, 10, 29, 0.95) 15%,
+        rgba(11, 10, 29, 0.3) 90%
+    );
+    z-index: 2;
+}
+
+/* Pastikan Carousel Item mengikuti lebar penuh */
+.carousel-item {
+    width: 100vw !important;
+    height: 90vh;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: var(--navbar-height) !important;
+}
+/* ==========================================================================
+   3. COMPONENTS (BUTTONS & INDICATORS)
+   ========================================================================== */
+.btn-primary-hero,
+.btn-outline-hero {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-primary-hero {
+    background: white;
+    color: var(--dark-bg);
+    border: 2px solid white;
+}
+
+.btn-primary-hero:hover {
+    background: var(--primary-tech);
+    border-color: var(--primary-tech);
+    color: white;
+}
+
+.btn-outline-hero {
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+}
+
+.custom-indicators {
+    justify-content: flex-end !important;
+    margin-right: 5% !important;
+    margin-bottom: 3rem !important;
+    z-index: 15;
+}
+
+.custom-indicators [data-bs-target] {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50%;
+    background-color: white !important;
+    border: none;
+}
+
+/* ==========================================================================
+   4. SWIPER & GALLERY
+   ========================================================================== */
+.heroSwiper {
+    width: 100%;
+    padding: 60px 0;
+    overflow-x: hidden;
+}
+
+.swiper-slide {
+    width: 850px;
+    transition: all 0.5s ease;
+    opacity: 0.4;
+    transform: scale(0.85);
+    filter: grayscale(100%);
+}
+
+.swiper-slide-active {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: grayscale(0%);
+    z-index: 10;
+}
+
+/* Pastikan carousel-item dan carousel-inner juga 100% */
+.carousel,
+.carousel-inner,
+.carousel-item {
+    height: 100%;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE (MOBILE OPTIMIZED) - FINAL REVISION
+   ========================================================================== */
+@media (max-width: 991px) {
+    :root {
+        --navbar-height: 70px;
+    }
+
+    /* 1. Kunci Section & Item agar tidak bocor/gap putih */
+    .main-hero,
+    .carousel-item,
+    .carousel-inner {
+        height: 100vh !important;
+        width: 100vw !important;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* 2. Media Fix: Menggunakan teknik stretch mutlak */
+    .hero-media {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center;
+        z-index: 1;
+        transform: none !important; /* Hapus transform agar tidak offset kiri */
+    }
+
+    /* 3. Container & Content Layout */
+    .hero-container {
+        padding-top: calc(var(--navbar-height) + 20px) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+    }
+
+    .hero-content {
+        padding: 0 20px;
+        width: 100%;
+        z-index: 5;
+    }
+
+    /* 4. Carousel Indicators (PERBAIKAN UTAMA) */
+    .custom-indicators {
+        position: absolute;
+        bottom: 30px !important; /* Jarak dari bawah layar HP */
+        left: 0 !important;
+        right: 0 !important;
+        margin: 0 auto !important; /* Center secara horizontal */
+        justify-content: center !important;
+        z-index: 15;
+        width: 100%;
+        display: flex !important;
+    }
+
+    .custom-indicators [data-bs-target] {
+        width: 12px !important; /* Ukuran lebih pas untuk jempol */
+        height: 12px !important;
+        margin: 0 6px !important;
+        border: 2px solid rgba(255, 255, 255, 0.5) !important;
+        background-color: transparent !important;
+        opacity: 1 !important;
+    }
+
+    .custom-indicators .active {
+        background-color: var(--primary-tech) !important;
+        border-color: var(--primary-tech) !important;
+        width: 30px !important; /* Efek memanjang untuk yang aktif */
+        border-radius: 5px;
+    }
+
+    /* 5. Typography & Buttons */
+    .display-3 {
+        font-size: 1.7rem !important;
+        margin-bottom: 25px !important;
+    }
+
+    .hero-content .d-flex {
+        flex-direction: column;
+        gap: 12px !important;
+        align-items: center;
+    }
+
+    .btn-primary-hero,
+    .btn-outline-hero {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Penyesuaian untuk HP dengan layar sangat kecil (seperti iPhone SE) */
+@media (max-width: 375px) {
+    .display-3 {
+        font-size: 1.5rem !important;
+    }
+    .hero-container {
+        padding-top: calc(var(--navbar-height) + 20px) !important;
+    }
+}
+
+/* =========================================
+   PROGRAMS SECTION (DARK TECH STYLE)
+   ========================================= */
+
+.programs-section {
+    background-color: #080f1f; /* Warna Background Gelap Pekat */
+    /* Opsional: Pattern grid halus */
+    background-image: radial-gradient(#1e293b 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+/* Judul Gradient */
+.text-gradient-blue {
+    background: linear-gradient(90deg, #ffffff, #0061f2);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- CARD DESIGN (GLASSMORPHISM) --- */
+.program-card {
+    background: rgba(255, 255, 255, 0.03); /* Transparan */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect: Card Naik & Glow */
+.program-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 97, 242, 0.5); /* Border jadi biru */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
+   PERBAIKAN ICON PROGRAM (FORCE TRANSPARENT)
+   ========================================= */
+
+/* 1. CONTAINER ICON UMUM */
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 2. FORCE TRANSPARENT BACKGROUND (Agar tidak solid) */
+
+/* --- Biru (Modular) --- */
+.bg-blue-soft {
+    /* PENTING: Gunakan !important agar background jadi transparan, bukan solid */
+    background-color: rgba(0, 97, 242, 0.15) !important;
+    border: 1px solid rgba(0, 97, 242, 0.3) !important;
+}
+.bg-blue-soft i {
+    color: #0061f2 !important; /* Icon Biru Cerah */
+    font-size: 36px;
+}
+
+/* --- Ungu (Elektronika) --- */
+.bg-purple-soft {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    border: 1px solid rgba(139, 92, 246, 0.3) !important;
+}
+.bg-purple-soft i {
+    color: #8b5cf6 !important; /* Icon Ungu Cerah */
+    font-size: 36px;
+}
+
+/* --- Cyan (Programming) --- */
+.bg-cyan-soft {
+    background-color: rgba(6, 182, 212, 0.15) !important;
+    border: 1px solid rgba(6, 182, 212, 0.3) !important;
+}
+.bg-cyan-soft i {
+    color: #06b6d4 !important;
+    font-size: 36px;
+}
+
+/* --- Merah (Security) --- */
+.bg-red-soft {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+.bg-red-soft i {
+    color: #ef4444 !important;
+    font-size: 36px;
+}
+
+/* 3. HOVER STATE (SAAT DISENTUH) */
+/* Saat hover baru boleh jadi SOLID */
+
+.program-card:hover .bg-blue-soft {
+    background-color: #0061f2 !important;
+    box-shadow: 0 0 20px rgba(0, 97, 242, 0.6);
+}
+
+.program-card:hover .bg-purple-soft {
+    background-color: #8b5cf6 !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.program-card:hover .bg-cyan-soft {
+    background-color: #06b6d4 !important;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+.program-card:hover .bg-red-soft {
+    background-color: #ef4444 !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+/* Saat Hover: Icon jadi PUTIH */
+.program-card:hover .icon-wrapper i {
+    color: #ffffff !important;
+    transform: scale(1.1);
+}
+
+/* --- TAGS (Badge kecil) --- */
+.program-tags li span {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-size: 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- TOMBOL LINK --- */
+.btn-link-custom {
+    text-decoration: none;
+    color: #0061f2; /* Tech Blue */
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.btn-link-custom:hover {
+    padding-left: 5px; /* Geser kanan dikit */
+    color: #38bdf8;
+}
+
+/* --- GLOW EFFECT DI BACKGROUND --- */
+.glow-bg {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+        circle,
+        rgba(0, 97, 242, 0.15) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* =========================================
+   WHY US SECTION (DARK NAVY)
+   ========================================= */
+
+.why-us-section {
+    /* Background Navy Gelap (Matching dengan Footer & Navbar Scroll) */
+    background-color: #0b162c;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.text-cyan {
+    color: #38bdf8 !important;
+}
+
+/* --- STAT BOX (Angka-angka) --- */
+.stat-box {
+    border-left: 3px solid #0061f2; /* Garis biru di kiri */
+    padding-left: 15px;
+    transition: 0.3s;
+}
+
+.stat-box:hover {
+    border-left-color: #38bdf8; /* Berubah cyan saat hover */
+    transform: translateX(5px);
+}
+
+/* --- FEATURE CARD TECH --- */
+.feature-card-tech {
+    background: rgba(255, 255, 255, 0.02); /* Sangat transparan */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+}
+
+.feature-card-tech:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(0, 97, 242, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    border-color: rgba(0, 97, 242, 0.3);
+    transform: translateX(10px); /* Geser kanan saat hover */
+}
+
+/* --- ICON BOX --- */
+.icon-box-tech {
+    width: 60px;
+    height: 60px;
+    background-color: #080f1f; /* Lebih gelap dari background section */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #0061f2; /* Tech Blue */
+    border: 1px solid rgba(0, 97, 242, 0.2);
+    box-shadow: 0 0 15px rgba(0, 97, 242, 0.1); /* Glow halus */
+    transition: 0.3s;
+}
+
+.feature-card-tech:hover .icon-box-tech {
+    background-color: #0061f2;
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(0, 97, 242, 0.4); /* Glow makin terang */
+    transform: rotateY(180deg); /* Efek putar ikon */
+}
+
+/* Hiasan Garis Tech di kanan */
+.tech-line {
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #0061f2, transparent);
+    opacity: 0.2;
+    right: 50px;
+}
+
+/* =========================================
+   METHODOLOGY SECTION
+   ========================================= */
+
+.methodology-section {
+    /* Background sedikit lebih terang dari Navy sebelumnya, atau sama */
+    background-color: #0f172a;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Kartu Metode */
+.method-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden; /* Agar angka besar tidak keluar kotak */
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+/* Efek Garis Bawah Biru saat Hover */
+.method-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: #0061f2; /* Tech Blue */
+    transition: width 0.4s ease;
+}
+
+.method-card:hover::after {
+    width: 100%;
+}
+
+.method-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Watermark Angka Besar (01, 02...) */
+.method-number {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    font-size: 8rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.03); /* Sangat transparan */
+    z-index: -1;
+    line-height: 1;
+    transition: 0.4s;
+}
+
+.method-card:hover .method-number {
+    color: rgba(0, 97, 242, 0.1); /* Sedikit biru saat hover */
+    transform: scale(1.1);
+}
+
+/* Icon */
+.method-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0061f2 0%, #003688 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 97, 242, 0.3);
+    transition: 0.3s;
+}
+
+.method-card:hover .method-icon {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* =========================================
+   PROCESS SECTION (ALUR PENDAFTARAN)
+   ========================================= */
+
+.process-section {
+    background-color: #080f1f; /* Hitam Pekat */
+}
+
+/* Garis Penghubung di belakang Icon */
+.timeline-line {
+    position: absolute;
+    top: 50px; /* Sesuaikan dengan tengah icon */
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: repeating-linear-gradient(
+        to right,
+        #0061f2 0,
+        #0061f2 10px,
+        transparent 10px,
+        transparent 20px
+    );
+    opacity: 0.3;
+    z-index: 0;
+}
+
+/* Wrapper Icon Bulat */
+.process-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    background-color: #0b162c;
+    border: 2px solid #0061f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1; /* Di atas garis */
+    font-size: 32px;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 97, 242, 0.2);
+    transition: 0.3s;
+}
+
+/* Angka Kecil (1,2,3,4) di pojok icon */
+.process-number {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 30px;
+    height: 30px;
+    background-color: #0061f2;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #080f1f;
+}
+
+/* Hover Effect */
+.process-card:hover .process-icon-wrapper {
+    background-color: #0061f2;
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 97, 242, 0.5);
+}
+
+.bg-success-glow {
+    border-color: #10b981 !important; /* Hijau untuk step terakhir */
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2) !important;
+}
+.bg-success-glow .process-number {
+    background-color: #10b981 !important;
+}
+
+/* =========================================
+   TESTIMONIALS SECTION (REFINED DARK TECH)
+   ========================================= */
+
+.testimonials-section-dark {
+    background-color: #0b0a1d; /* Warna Navy pekat standar kita */
+    position: relative;
+    /* Pattern dot halus kita kurangi opasitasnya agar tidak mengganggu teks */
+    background-image: radial-gradient(
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+    );
+    background-size: 40px 40px;
+    background-position:
+        0 0,
+        20px 20px;
+}
+
+/* Card Testimoni - VERSI SOLID (Sesuai Permintaan) */
+.testi-card-dark {
+    background: #161a2e !important; /* Warna Solid pekat, tidak tembus pandang */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Border lebih tegas */
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    margin: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow lebih tebal agar card "pop out" */
+}
+
+.testi-card-dark:hover {
+    background: #1c223d !important; /* Berubah sedikit lebih terang saat hover */
+    border-color: #4361ee; /* Warna Biru Tech Utama */
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(67, 97, 238, 0.2);
+}
+
+/* Penguatan Kontras Teks (Penting untuk Orang Tua) */
+.testi-card-dark p {
+    color: #e2e8f0 !important; /* Putih tulang yang solid dan tajam */
+    font-size: 16px;
+    line-height: 1.7; /* Jarak antar baris lebih lebar agar mudah dibaca */
+    font-weight: 400;
+}
+
+.testi-card-dark h5 {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+/* Icon Quote Box */
+.quote-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(67, 97, 238, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4361ee;
+}
+
+/* Badge Role */
+.text-cyan {
+    color: #4cc9f0 !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* --- SWIPER PAGINATION (MODERN TECH) --- */
+.swiper-pagination-bullet {
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #4361ee;
+    width: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.6);
+}
+
+/* Hiasan Glow - Kita buat lebih soft di pojok */
+.glow-bg-right {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+        circle,
+        rgba(67, 97, 238, 0.1) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================================
+   FAQ SECTION (DARK ACCORDION)
+   ========================================= */
+
+.faq-section {
+    background-color: #080f1f; /* Hitam Pekat */
+}
+
+.custom-accordion .accordion-item {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.custom-accordion .accordion-button {
+    background-color: rgba(255, 255, 255, 0.03); /* Transparan */
+    color: #ffffff;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px !important; /* Rounding */
+    padding: 20px 25px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+/* Saat Accordion Dibuka (Active) */
+.custom-accordion .accordion-button:not(.collapsed) {
+    background-color: rgba(0, 97, 242, 0.1); /* Biru Muda Transparan */
+    border-color: #0061f2; /* Border Biru Menyala */
+    color: #38bdf8; /* Teks jadi Cyan */
+    box-shadow: 0 0 20px rgba(0, 97, 242, 0.2);
+}
+
+/* Panah Accordion (Ganti warna putih) */
+.custom-accordion .accordion-button::after {
+    filter: invert(1); /* Ubah panah default bootstrap jadi putih */
+    transition: transform 0.3s;
+}
+.custom-accordion .accordion-button:not(.collapsed)::after {
+    filter: invert(1) sepia(1) saturate(5) hue-rotate(190deg); /* Ubah jadi biru saat aktif */
+}
+
+/* Isi Accordion */
+.custom-accordion .accordion-body {
+    background-color: transparent;
+    color: #b0b8c4; /* Teks abu terang */
+    padding: 20px 25px;
+    border-top: none;
+    line-height: 1.6;
+}
+
+/* =========================================
+   FINAL CTA SECTION (GRADIENT)
+   ========================================= */
+
+.cta-section {
+    background-color: #0061f2; /* Fallback color */
+    position: relative;
+}
+
+/* Gradient Background Keren */
+.cta-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0b162c 0%, #004bbd 100%);
+    z-index: 1;
+}
+
+/* Tombol Outline Putih khusus CTA */
+.btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.btn-outline-light:hover {
+    background-color: white;
+    color: #0061f2;
+    border-color: white;
+}
+
+/* Text Warning (Kuning Emas) */
+.text-warning {
+    color: #f59e0b !important;
+}
+
+/* =========================================
+   HERO CAROUSEL (DARK TECH THEME)
+   ========================================= */
+
+/* 1. Atur Jarak Header (Penting buat Logo Jumbo) */
+/* Desktop */
+.hero-spacing {
+    padding-top: 220px;
+}
+/* Mobile (Overwrite via Media Query di bawah nanti) */
+
+/* 2. Gradient Overlay (Lebih Premium dari sekadar Hitam) */
+.gradient-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(11, 22, 44, 0.9) 0%,
+        /* Navy Gelap di atas (nempel navbar) */ rgba(0, 0, 0, 0.6) 50%,
+        /* Transparan di tengah biar video kelihatan */ rgba(11, 22, 44, 1) 100%
+            /* Navy Solid di bawah (nyambung ke section berikutnya) */
+    );
+}
+
+/* 3. SWIPER CONTAINER */
+.heroSwiper {
+    padding-bottom: 50px;
+    overflow: visible !important; /* Agar bayangan/glow tidak terpotong */
+}
+
+/* 4. SLIDE ITEM (Kondisi Tidak Aktif) */
+.swiper-slide {
+    width: 800px; /* Lebar default desktop */
+    height: auto;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.4; /* Agak transparan */
+    transform: scale(0.85); /* Lebih kecil */
+    filter: grayscale(80%); /* Hitam putih */
+}
+
+.tech-card-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-card-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+/* 5. SLIDE AKTIF (Center - Highlight) */
+.swiper-slide-active {
+    opacity: 1;
+    transform: scale(1); /* Ukuran Normal */
+    filter: grayscale(0%); /* Warna muncul */
+    z-index: 10;
+}
+
+/* Efek Glow & Border Neon pada Slide Aktif */
+.swiper-slide-active .tech-card-wrapper {
+    border: 2px solid #0061f2; /* Border Biru Tech */
+    box-shadow: 0 0 30px rgba(0, 97, 242, 0.4); /* Glowing Blue Shadow */
+}
+
+/* 6. TOMBOL NAVIGASI (Kaca/Glassmorphism) */
+.custom-nav-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #38bdf8; /* Cyan Arrow */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.custom-nav-btn::after {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.custom-nav-btn:hover {
+    background-color: #0061f2; /* Jadi Biru saat hover */
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 97, 242, 0.6);
+    transform: scale(1.1);
+}
+
+/* 7. PAGINATION (Titik-titik) */
+.swiper-pagination-bullet {
+    background: #ffffff;
+    opacity: 0.5;
+}
+.swiper-pagination-bullet-active {
+    background: #0061f2;
+    width: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #0061f2;
+}
+
+/* =========================================
+   RESPONSIF HERO (HP & TABLET)
+   ========================================= */
+@media (max-width: 991px) {
+    /* Atur Jarak atas untuk Logo Kecil */
+    .hero-spacing {
+        padding-top: 100px !important;
+    }
+
+    .swiper-slide {
+        width: 85% !important; /* Slide memenuhi 85% layar HP */
+    }
+
+    .custom-nav-btn {
+        display: none; /* Sembunyikan panah di HP biar bersih */
+    }
+}
+
+/* =========================================
+   PARTNERSHIP SECTION (FINAL FIXED)
+   ========================================= */
+
+.partners-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 1. KOTAK PEMBUNGKUS LOGO (WRAPPER) */
+.partner-item-wrapper {
+    border-radius: 15px; /* Sudut membulat */
+    padding: 20px; /* Jarak dalam agar logo tidak mepet */
+    min-height: 180px; /* Tinggi minimum agar semua kotak seragam */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Efek Hover pada Kotak */
+.partner-item-wrapper:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(67, 97, 238, 0.3); /* List biru saat hover */
+    transform: translateY(-5px); /* Naik sedikit */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 2. STYLING LOGO */
+.partner-logo-natural {
+    max-height: 120px; /* Ukuran Desktop Besar */
+    width: auto;
+    max-width: 100%;
+    object-fit: contain; /* Agar logo tidak gepeng */
+
+    /* Efek Hitam Putih (Default) */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animasi membal halus */
+}
+
+/* Efek Hover pada Logo (Berwarna & Zoom) */
+.partner-item-wrapper:hover .partner-logo-natural {
+    filter: grayscale(0%) opacity(1); /* Kembali berwarna */
+    transform: scale(1.1); /* Zoom in 10% */
+}
+
+/* 3. RESPONSIF MOBILE */
+@media (max-width: 991px) {
+    /* Judul Rata Tengah di Mobile */
+    .partners-section h6,
+    .partners-section h4 {
+        text-align: center;
+    }
+
+    /* Ukuran Logo Lebih Kecil di Mobile agar rapi */
+    .partner-logo-natural {
+        max-height: 80px;
+    }
+
+    /* Tinggi kotak disesuaikan di mobile */
+    .partner-item-wrapper {
+        min-height: 140px;
+        padding: 15px;
+    }
+}
+
+/* =========================================
+   ABOUT TECH SECTION STYLE
+   ========================================= */
+.about-tech-section {
+    background-color: #0b0a1d;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+/* Efek Grid Halus di Background */
+.tech-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(67, 97, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(67, 97, 238, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+}
+
+/* Cahaya Neon di Belakang */
+.glow-orb-about {
+    position: absolute;
+    top: 20%;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+        circle,
+        rgba(67, 97, 238, 0.15) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    z-index: 1;
+}
+
+/* Visual Styling */
+.about-visual-wrapper {
+    position: relative;
+    padding: 20px;
+}
+
+.main-photo-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.frame-border {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(67, 97, 238, 0.3);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* Floating Stat Card (Glassmorphism) */
+.floating-tech-card {
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-tech);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Feature Icon Small */
+.feature-icon-small {
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    background: rgba(76, 201, 240, 0.1);
+    border: 1px solid rgba(76, 201, 240, 0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-tech);
+    transition: 0.3s;
+}
+
+.about-features-list .d-flex:hover .feature-icon-small {
+    background: var(--secondary-tech);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.text-cyan {
+    color: var(--secondary-tech);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991px) {
+    .floating-tech-card {
+        position: relative;
+        bottom: 0;
+        margin-top: -50px;
+        margin-left: auto;
+        width: fit-content;
+    }
+
+    .about-tech-section {
+        text-align: center;
+    }
+
+    .about-features-list .d-flex {
+        text-align: left;
+    }
+}
+
+/* Update Tombol Hero agar lebih 'Tech' */
+.btn-primary-hero {
+    background: linear-gradient(
+        135deg,
+        var(--primary-tech),
+        var(--secondary-tech)
+    ) !important;
+    color: white !important;
+    border: none !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Efek kilatan cahaya pada tombol */
+.btn-primary-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.btn-primary-hero:hover::before {
+    left: 100%;
+}
+
+.btn-outline-hero {
+    border: 2px solid var(--secondary-tech) !important;
+    color: white !important;
+    backdrop-filter: blur(5px);
+}
+
+.btn-outline-hero:hover {
+    background: var(--secondary-tech) !important;
+    box-shadow: 0 0 20px var(--secondary-tech);
+}
+
+/* Mempercantik Teks Deskripsi di Hero */
+.hero-content p {
+    max-width: 600px;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+}
+
+/* Memastikan Badge Label Terlihat Konsisten */
+.badge-label {
+    font-size: 0.85rem !important;
+    letter-spacing: 3px !important;
+    font-weight: 800 !important;
+}
+
+/* ==========================================================================
+   5. VIDEO GALLERY SECTION (SWIPER & PLAYER)
+   ========================================================================== */
+
+/* Card Video Container */
+.video-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    background: #161625;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease;
+    cursor: pointer;
+}
+
+.video-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-tech);
+    box-shadow: 0 15px 30px rgba(67, 97, 238, 0.2);
+}
+
+/* Video Element - [PERBAIKAN WARNA ABU-ABU] */
+.v-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6); /* Redup awal */
+    transition: filter 0.4s ease;
+}
+
+/* Saat hover atau saat video dimainkan (class is-playing ditambah via JS) */
+.video-card:hover .v-player,
+.v-player.is-playing {
+    filter: brightness(1) !important; /* Warna asli kembali */
+}
+
+/* Overlay & Tombol Play */
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(11, 10, 29, 0.9) 15%,
+        transparent 60%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+    pointer-events: none; /* Agar klik tembus ke card/video */
+}
+
+.play-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.8);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+    margin: auto;
+    pointer-events: auto; /* Tombol bisa diklik */
+    z-index: 10;
+}
+
+.video-info {
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+}
+
+/* Tombol Navigasi Swiper Video */
+.video-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(67, 97, 238, 0.3);
+    background: transparent;
+    color: var(--primary-tech);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 0;
+}
+
+.video-next.active,
+.video-nav-btn:hover {
+    background: var(--primary-tech);
+    border-color: var(--primary-tech);
+    color: white;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.5);
+}
+
+.video-nav-btn:hover i {
+    transform: scale(1.2);
+}
+.video-prev:hover i {
+    transform: translateX(-3px) scale(1.2);
+}
+.video-next:hover i {
+    transform: translateX(3px) scale(1.2);
+}
+
+/* Targetkan slide video yang TIDAK aktif */
+.videoSwiper .swiper-slide {
+    filter: grayscale(
+        0%
+    ) !important; /* Paksa matikan efek abu-abu/hitam putih */
+    opacity: 0.6; /* Biarkan sedikit meredup agar fokus tetap pada video tengah */
+    transition: all 0.4s ease;
+}
+
+/* Targetkan slide video yang AKTIF (Tengah) */
+.videoSwiper .swiper-slide-active {
+    filter: grayscale(0%) !important;
+    opacity: 1; /* Terang 100% */
+}
+
+/* Jika Anda ingin posternya (gambar cover video) juga tidak terlalu gelap */
+.videoSwiper .v-player {
+    filter: brightness(
+        0.85
+    ); /* Ubah angka ini jika dirasa masih terlalu gelap */
+}
+
+.videoSwiper .swiper-slide-active .v-player {
+    filter: brightness(1); /* Terang normal saat di tengah */
+}
+
+/* Gaya tombol link minimalis untuk Partner */
+.btn-link.text-primary {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.btn-link.text-primary:hover {
+    color: var(--secondary-tech) !important;
+    border-bottom: 1px solid var(--secondary-tech);
+    letter-spacing: 0.5px;
+}
+
+/* Penyesuaian jarak section */
+.partners-section,
+.testimonial-section {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-link-custom {
+    color: var(--secondary-tech);
+    font-weight: 600;
+    transition: 0.3s;
+    font-size: 0.85rem;
+}
+
+.btn-link-custom:hover {
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+/* Memperbaiki tinggi kartu swiper agar seragam */
+.swiper-slide {
+    height: auto !important;
+}
+
+.testi-card-dark {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.testi-card-dark:hover {
+    border-color: var(--primary-tech);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-5px);
+}
+
+/* Header Background */
+.testimonials-header-tech {
+    background-color: #0b0a1d;
+    padding-top: 12rem;
+    min-height: 80vh;
+}
+
+.glow-orb-header {
+    position: absolute;
+    top: 10%;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+        circle,
+        rgba(67, 97, 238, 0.1) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    z-index: 1;
+}
+
+/* Filter Tech Style */
+.filter-container-tech {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 5px;
+}
+
+.btn-filter-tech {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+.btn-filter-tech.active,
+.btn-filter-tech:hover {
+    background: var(--primary-tech);
+    color: white;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+/* Card Improvements */
+.quote-icon-tech {
+    color: var(--primary-tech);
+    opacity: 0.5;
+    font-size: 1.5rem;
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background: rgba(67, 97, 238, 0.1);
+    border: 1px solid rgba(67, 97, 238, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-tech);
+    font-weight: 800;
+    font-size: 0.8rem;
+}
+
+/* Modal Styling */
+.bg-dark-tech {
+    background: #111026 !important;
+    border-radius: 20px !important;
+}
+
+@media (max-width: 768px) {
+    .filter-container-tech {
+        flex-wrap: wrap;
+        border-radius: 15px;
+        justify-content: center;
+    }
+}
+
+/* Pastikan tombol Baca Selengkapnya mengikuti tema */
+.btn-link-custom {
+    color: var(--secondary-tech) !important; /* Warna Cyan/Biru Muda */
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    background: none;
+    border: none;
+}
+
+.btn-link-custom:hover {
+    color: white !important;
+    letter-spacing: 0.5px;
+    transform: translateX(5px);
+}
+
+/* Memastikan Filter tetap rapi di tengah */
+.filter-wrapper {
+    width: 100%;
+}
+
+.filter-container-tech {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 5px;
+}
+
+.btn-filter-tech {
+    background: transparent;
+    border: none;
+    color: #94a3b8; /* text-secondary */
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.btn-filter-tech.active {
+    background: var(--primary-tech) !important; /* Biru Utama */
+    color: white !important;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+/* Responsivitas Mobile */
+@media (max-width: 576px) {
+    .filter-container-tech {
+        padding: 5px;
+        gap: 2px;
+    }
+    .btn-filter-tech {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Warna Aksen Baru: Orange/Game Dev */
+.bg-orange-soft {
+    background: rgba(255, 159, 26, 0.1) !important;
+}
+
+.text-orange {
+    color: #ff9f1a !important;
+    text-shadow: 0 0 10px rgba(255, 159, 26, 0.5);
+}
+
+.btn-link-custom.text-orange:hover {
+    color: #ffb84d !important;
+    text-shadow: 0 0 15px rgba(255, 159, 26, 0.8);
+}
+
+/* =========================================
+   COMING SOON TECH STYLE
+   ========================================= */
+.coming-soon-section {
+    min-height: 100vh;
+    background-color: #0b0a1d;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 0;
+}
+
+/* Orb Cahaya di Tengah */
+.glow-orb-coming-soon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+        circle,
+        rgba(67, 97, 238, 0.15) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    z-index: 1;
+}
+
+/* Animasi Icon Roket */
+.coming-soon-icon i {
+    animation: rocketFloat 3s ease-in-out infinite;
+}
+
+@keyframes rocketFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* Progress Bar Style */
+.progress-tech-container {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.progress-tech-bar {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-tech),
+        var(--secondary-tech)
+    );
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.5);
+    border-radius: 50px;
+    transition: 1s ease-in-out;
+}
+
+/* Animasi Teks Gradient */
+.text-gradient {
+    background: linear-gradient(135deg, #4361ee, #4cc9f0);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.video-overlay {
+    transition: opacity 0.4s ease;
+    pointer-events: none; /* Klik akan tembus ke card */
+}
+
+.play-btn {
+    pointer-events: auto; /* Tombol tetap bisa diklik */
+    z-index: 10;
+}
+
+.video-card {
+    cursor: pointer;
+}
+
+/* Pastikan video memenuhi container */
+.v-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navigasi Button Testimonial */
+.testi-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #161a2e; /* Solid Navy */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.testi-nav-btn:hover {
+    background: #4361ee;
+    border-color: #4361ee;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.4);
+}
+
+.testi-nav-btn.active {
+    background: #4361ee;
+    border-color: #4361ee;
+}
+
+/* Memastikan Swiper tidak memotong shadow tombol */
+.testimonialSwiper {
+    overflow: visible !important;
+}
+
+@media (min-width: 1200px) {
+    .testi-card-dark p {
+        font-size: 14px; /* Sedikit lebih kecil agar pas di 5 kolom */
+        line-height: 1.5;
+    }
+}
+
+/* Untuk animasi munculnya item testimonial */
+.testimonial-item {
+    opacity: 0; /* Mulai dari tidak terlihat */
+    transform: translateY(20px); /* Agak ke bawah */
+    transition:
+        opacity 0.5s ease-out,
+        transform 0.5s ease-out; /* Transisi untuk opacity dan posisi */
+}
+
+/* Class yang akan ditambahkan JS saat item muncul */
+.testimonial-item.is-visible {
+    opacity: 1; /* Jadi terlihat */
+    transform: translateY(0); /* Kembali ke posisi normal */
+}
+
+/* Animasi untuk icon mouse di placeholder */
+.reveal-icon-anim {
+    animation: mouse-float 2s ease-in-out infinite;
+}
+
+@keyframes mouse-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Custom Pagination Dark Tech */
+.custom-pagination .pagination {
+    gap: 8px;
+}
+
+.custom-pagination .page-link {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    border-radius: 8px;
+    padding: 10px 18px;
+    transition: all 0.3s ease;
+}
+
+.custom-pagination .page-item.active .page-link {
+    background: var(--primary-tech);
+    border-color: var(--primary-tech);
+    color: white;
+    box-shadow: 0 0 15px rgba(67, 97, 238, 0.4);
+}
+
+.custom-pagination .page-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: var(--primary-tech);
+}
+
+/* Animasi Card (Staggered Fade Up) */
+.testimonial-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+
+.testimonial-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navigasi Partner Tetap Solid */
+.partner-nav-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background: #161a2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+/* Container Logo */
+.partner-logo-wrapper {
+    padding: 10px; /* Gap dipersempit agar muat lebih banyak logo besar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo Super Besar & Berwarna */
+.partner-logo-img {
+    max-height: 160px !important; /* UKURAN SUPER BESAR */
+    width: auto;
+    object-fit: contain;
+    filter: none !important; /* Hapus Grayscale */
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    transition: transform 0.3s ease;
+}
+
+.partner-logo-img:hover {
+    transform: scale(1.05); /* Sedikit zoom saat kursor di atasnya */
+}
+
+/* Responsivitas untuk Tablet & Mobile */
+@media (max-width: 992px) {
+    .partner-logo-img {
+        max-height: 100px !important;
+    }
+}
+@media (max-width: 576px) {
+    .partner-logo-img {
+        max-height: 80px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-container-tech {
+        flex-wrap: wrap;
+        border-radius: 15px;
+        justify-content: center;
+    }
+
+    /* === TESTIMONIAL SWIPER MOBILE === */
+    .testimonialSwiper {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    /* PERBAIKAN: Targetkan 'width: 100%' HANYA untuk testimonial, bukan global */
+    .testimonialSwiper .swiper-slide {
+        width: 100% !important;
+    }
+
+    /* === VIDEO SWIPER MOBILE === */
+    .videoSwiper {
+        padding-bottom: 30px;
+    }
+    /* Hapus width: 100% di sini, biarkan JS mengatur lebarnya (1.2 slides) */
+    .videoSwiper .swiper-slide {
+        width: 80% !important; /* Beri ukuran proporsional (opsional, jika JS tertimpa CSS lain) */
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+    .videoSwiper .swiper-slide-active {
+        transform: scale(1);
+    }
+}
+
+/* Paksa semua kartu testimoni (baik yang aktif maupun tidak) untuk tampil jelas */
+.testimonialSwiper .swiper-slide {
+    filter: grayscale(0%) !important; /* Matikan efek hitam-putih */
+    opacity: 1 !important; /* Terang 100% agar teks bisa dibaca */
+    transform: scale(1) !important; /* Ukuran normal, tidak mengecil */
+}
+
+/* Tetap pertahankan efek hover (naik ke atas dan glow) bawaan dari class .testi-card-dark */
+.testimonialSwiper .swiper-slide:hover .testi-card-dark {
+    transform: translateY(-5px);
+}
+
+/* =========================================
+   PERBAIKAN MODAL TESTIMONI (Z-INDEX FIX)
+   ========================================= */
+
+/* 1. Paksa SEMUA Modal menutupi Navbar (Z-Index Level Dewa) */
+.modal {
+    z-index: 105000 !important;
+}
+
+/* Paksa background hitam transparan (backdrop) berada di atas Navbar juga */
+.modal-backdrop {
+    z-index: 104000 !important;
+}
+
+/* 2. Reset margin agar modal kembali pas di tengah layar (tidak perlu jarak manual) */
+#testimonialModal .modal-dialog {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+}
+
+/* 3. Desain Kotak Modal & Batasi Tinggi Maksimal */
+#testimonialModal .modal-dialog-scrollable .modal-content {
+    max-height: 85vh !important; /* Selalu sisakan jarak 15% dari tepi layar atas/bawah */
+    background-color: #161a2e; /* Warna solid Navy */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+/* 4. Mempercantik Scrollbar di dalam Modal */
+#testimonialModal .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+#testimonialModal .modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+#testimonialModal .modal-body::-webkit-scrollbar-thumb {
+    background: var(--primary-tech, #0061f2);
+    border-radius: 10px;
+}
+#testimonialModal .modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-tech, #38bdf8);
+}

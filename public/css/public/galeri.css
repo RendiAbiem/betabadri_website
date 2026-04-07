@@ -1,0 +1,119 @@
+/* =========================================
+   GALLERY PAGE STYLE (FIXED)
+   ========================================= */
+
+/* --- A. FILTER BUTTONS (NEON STYLE) --- */
+.btn-filter {
+    /* Background sedikit lebih terang agar tombol terlihat */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 97, 242, 0.5); /* Border Biru Jelas */
+
+    /* PENTING: Paksa warna teks jadi Putih */
+    color: #ffffff !important;
+
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Efek Hover & Active: Biru Menyala */
+.btn-filter:hover,
+.btn-filter.active {
+    background: #0061f2;
+    border-color: #0061f2;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(0, 97, 242, 0.6); /* Glow Effect */
+    transform: translateY(-2px);
+}
+
+.btn-filter i {
+    margin-right: 8px;
+    color: #38bdf8; /* Warna Ikon Cyan */
+}
+.btn-filter:hover i,
+.btn-filter.active i {
+    color: #ffffff; /* Ikon jadi putih saat aktif */
+}
+
+
+/* --- B. GALLERY CARD (UKURAN TETAP & RAPI) --- */
+.gallery-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden; /* Wajib: agar gambar tidak keluar kotak */
+
+    /* KUNCI: Tinggi harus ditetapkan */
+    height: 280px;
+    width: 100%;
+
+    background-color: #000; /* Warna dasar hitam */
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Gambar di dalam card */
+.gallery-card img {
+    /* Paksa memenuhi kotak parent */
+    width: 100% !important;
+    height: 100% !important;
+
+    /* Object Fit Cover: Agar gambar tidak gepeng/penyok */
+    object-fit: cover;
+    object-position: center;
+
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+/* Hover: Zoom Image */
+.gallery-card:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.6); /* Gelapkan gambar agar teks jelas */
+}
+
+
+/* --- C. OVERLAY TEXT (TIMBUL DARI BAWAH) --- */
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Gradient Hitam Transparan */
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%);
+
+    /* Posisi Konten */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Teks di bawah */
+    padding: 20px;
+
+    /* Animasi Awal: Hilang & Turun */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Saat Hover: Munculkan Overlay */
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+    transform: translateY(0); /* Naik ke posisi normal */
+}
+
+/* Judul & Badge */
+.gallery-overlay h6 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}

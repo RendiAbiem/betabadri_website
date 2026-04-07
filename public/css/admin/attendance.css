@@ -1,0 +1,47 @@
+/* =========================================
+   FIX FILTER INPUTS (DARK MODE)
+   ========================================= */
+
+/* 1. INPUT FIELD & DATE (Agar tidak putih) */
+.form-control-dark {
+    background-color: rgba(15, 23, 42, 0.6) !important; /* Warna Gelap */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    padding: 10px 15px;
+}
+
+/* Fix khusus icon kalender pada input date agar putih */
+input[type="date"].form-control-dark {
+    color-scheme: dark;
+}
+
+/* 2. SELECT DROPDOWN (Memperbaiki Panah 'V' yang Banyak) */
+.form-select-dark {
+    /* Warna Dasar */
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+
+    /* PENTING: Matikan tampilan panah bawaan browser/sistem */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* PENTING: Pasang panah custom & cegah perulangan (repeat) */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+
+    background-repeat: no-repeat;        /* Agar panah tidak muncul banyak */
+    background-position: right 1rem center; /* Posisi di kanan tengah */
+    background-size: 16px 12px;          /* Ukuran panah */
+
+    padding-right: 2.5rem; /* Beri jarak teks agar tidak menabrak panah */
+}
+
+/* Efek Fokus */
+.form-control-dark:focus,
+.form-select-dark:focus {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    border-color: #0061f2 !important; /* Border biru saat diklik */
+    box-shadow: 0 0 0 0.25rem rgba(0, 97, 242, 0.25);
+    color: white;
+}

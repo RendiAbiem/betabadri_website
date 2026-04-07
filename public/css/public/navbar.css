@@ -1,0 +1,355 @@
+/* --- FIXED NAVBAR (SUPER JUMBO LOGO) --- */
+
+/* 1. CONTAINER HEADER */
+#header {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+
+    /* Padding diperbesar agar logo raksasa punya ruang napas */
+    padding: 15px 0;
+    transition: all 0.4s ease;
+    width: 100%;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* 2. LOGO CUSTOM (UKURAN RAKSASA) */
+.logo-image {
+    /* UBAH DISINI: Tinggi 160px (Sangat Besar) */
+    height: 160px !important;
+
+    width: auto !important;
+    max-width: unset !important;
+    max-height: unset !important;
+    display: block;
+    object-fit: contain;
+
+    /* Warna ASLI (Silver/Biru) */
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.6)); /* Shadow lebih tebal */
+
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 5px 0;
+}
+
+/* 3. TEKS MENU (PUTIH) */
+#header .nav-link {
+    color: #ffffff !important;
+    font-size: 16px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    padding: 10px 15px !important;
+    transition: color 0.3s;
+}
+
+#header .fa-chevron-down {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+#header .navbar-toggler-icon {
+    filter: invert(1);
+    width: 45px; /* Hamburger ikut diperbesar */
+    height: 45px;
+}
+
+/* =========================================
+   KONDISI SAAT SCROLL / HOVER (DARK GLASS)
+   ========================================= */
+
+#header:hover,
+#header.header-scrolled {
+    background-color: rgba(11, 22, 44, 0.95) !important; /* Navy Gelap */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+    padding: 10px 0;
+}
+
+/* Saat Scroll: Logo mengecil ke 100px (Masih Besar & Terbaca) */
+#header:hover .logo-image,
+#header.header-scrolled .logo-image {
+    height: 100px !important;
+    filter: none;
+}
+
+/* Teks Menu */
+#header:hover .nav-link,
+#header.header-scrolled .nav-link {
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+/* Hover Link (Cyan) */
+#header .nav-link:hover {
+    color: #38bdf8 !important;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: #0b162c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Margin top diperbesar karena navbar makin tinggi */
+    margin-top: 30px !important;
+}
+.dropdown-item {
+    color: #ffffff;
+}
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #38bdf8;
+}
+
+/* --- TOMBOL MASUK (BIRU TECH) --- */
+.btn-cta-green {
+    background-color: #0061f2;
+    color: #ffffff !important;
+    font-weight: 700;
+    padding: 12px 35px; /* Tombol lebih lebar */
+    border-radius: 50px;
+    border: 2px solid #0061f2;
+    box-shadow: 0 4px 15px rgba(0, 97, 242, 0.4);
+    transition: all 0.3s;
+}
+
+/* Tombol saat transparan */
+#header:not(:hover):not(.header-scrolled) .btn-cta-green {
+    background-color: rgba(0, 97, 242, 0.7);
+    border-color: transparent;
+    backdrop-filter: blur(5px);
+}
+
+.btn-cta-green:hover {
+    background-color: #004bbd;
+    border-color: #004bbd;
+    box-shadow: 0 0 20px rgba(0, 97, 242, 0.7);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   MOBILE RESPONSIVE FIX (LOGO DINAMIS)
+   ========================================= */
+
+@media (max-width: 991px) {
+
+    /* 1. LOGO DEFAULT DI HP (Saat Menu TERTUTUP & Di Atas) */
+    .logo-image {
+        height: 70px !important; /* Ukuran default HP (Agak Besar) */
+        margin: 5px 0;
+        transition: height 0.3s ease; /* Animasi perubahan ukuran */
+    }
+
+    /* 2. LOGO SAAT MENU DIBUKA atau SAAT SCROLL (Mengecil) */
+    /* .mobile-menu-open ditambahkan oleh JS saat menu buka */
+    /* .header-scrolled ditambahkan oleh JS saat user scroll */
+    #header.mobile-menu-open .logo-image,
+    #header.header-scrolled .logo-image {
+        height: 50px !important; /* Mengecil jadi 50px */
+    }
+
+    /* ----------------------------------------------------------- */
+
+    /* 3. MENU DROPDOWN (LOGIKA SAMA SEPERTI SEBELUMNYA) */
+    .navbar-collapse {
+        background-color: #0b162c;
+        padding: 0 20px 20px 20px;
+        border-radius: 0 0 20px 20px;
+        margin-top: 0;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+    }
+
+    /* Style Link Menu HP */
+    #header .nav-link {
+        padding: 15px 0 !important;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        color: #ffffff !important;
+        text-align: center;
+        text-shadow: none; /* Hapus shadow di dalam menu biar bersih */
+    }
+
+    #header .nav-link:last-child { border-bottom: none; }
+
+    /* Style Dropdown Anak (Programs) */
+    .dropdown-menu {
+        background-color: rgba(0,0,0,0.2);
+        margin-top: 0 !important;
+        box-shadow: none;
+        border: none;
+        text-align: center;
+    }
+
+    /* Tombol Masuk HP */
+    .nav-item.ms-lg-4 {
+        margin-left: 0 !important;
+        margin-top: 25px;
+    }
+
+    .btn-cta-green {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #0061f2 !important;
+        border: none;
+    }
+}
+
+/* --- JANGAN LUPA: CLASS INI WAJIB ADA DI LUAR MEDIA QUERY --- */
+/* Class ini dipakai JS untuk mengubah header jadi solid */
+#header.mobile-menu-open {
+    background-color: #0b162c !important; /* Biru Solid */
+    transition: background 0.3s;
+}
+
+/* --- SPLIT DROPDOWN FIX --- */
+
+/* Hapus panah bawaan bootstrap agar tidak double dengan icon fontawesome kita */
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+/* Atur layout flex agar teks dan panah sejajar */
+.custom-dropdown {
+    display: flex;
+    align-items: center;
+}
+
+/* Pastikan kedua link (Teks & Panah) warnanya konsisten */
+.custom-dropdown .nav-link {
+    display: inline-block; /* Agar bisa diatur paddingnya */
+    color: #ffffff !important; /* Default Putih */
+    transition: all 0.3s;
+}
+
+/* Efek Hover pada Panah Saja */
+.custom-dropdown .dropdown-toggle:hover {
+    color: #0061f2 !important; /* Panah jadi biru saat dihover */
+    transform: translateY(1px); /* Efek tekan sedikit */
+}
+
+/* SAAT SCROLL / HEADER PUTIH/NAVY (Logic Pewarnaan) */
+/* Jika header sedang mode "scrolled" (background gelap/putih), text tetap ikut aturan global */
+
+/* Mobile Fix: Agar panah mudah ditekan di HP */
+@media (max-width: 991px) {
+    .custom-dropdown {
+        flex-wrap: wrap; /* Di HP, biarkan rapi */
+        justify-content: center;
+    }
+
+    /* Perbesar area sentuh panah di HP */
+    .custom-dropdown .dropdown-toggle {
+        padding: 10px 20px !important;
+        width: 100%; /* Panah full width di bawah teks kalau di HP */
+        text-align: center;
+    }
+}
+
+/* ==================================================
+   HOVER DROPDOWN LOGIC (Desktop Only) - FINAL
+   ================================================== */
+
+@media (min-width: 992px) {
+    /* 1. Container Utama */
+    .nav-item.dropdown.custom-dropdown {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        /* Jembatan hover: ruang aman agar menu tidak hilang saat kursor turun */
+        padding-bottom: 10px !important;
+        margin-bottom: -10px !important;
+    }
+
+    /* 2. State Default Menu (Tersembunyi) */
+    .custom-dropdown .dropdown-menu {
+        display: block !important; /* Block diperlukan agar animasi opacity jalan */
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 100%; /* Pas di bawah navbar */
+        left: 0;
+        margin-top: 0 !important; /* Jangan pakai margin besar agar tidak putus */
+
+        background-color: #161a2e !important; /* Solid Navy */
+        min-width: 240px;
+        border: 1px solid rgba(67, 97, 238, 0.3) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        padding: 12px;
+        border-radius: 12px;
+
+        transform: translateY(10px);
+        transition: all 0.25s ease-in-out;
+        pointer-events: none;
+    }
+
+    /* 3. Jembatan Transparan (Invisible Shield) */
+    /* Ini yang menjaga menu tetap terbuka saat mouse bergerak di antara gap */
+    .custom-dropdown .dropdown-menu::before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 0;
+        width: 100%;
+        height: 15px;
+        background: transparent;
+    }
+
+    /* 4. Trigger Hover */
+    .custom-dropdown:hover > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    /* 5. Perubahan Warna & Icon Panah */
+    .custom-dropdown:hover .nav-link {
+        color: #4361ee !important;
+    }
+
+    .custom-dropdown:hover .fa-chevron-down {
+        transform: rotate(180deg);
+        color: #4361ee !important;
+    }
+}
+
+/* 6. Styling Link di Dalam Dropdown */
+.custom-dropdown .dropdown-item {
+    padding: 10px 18px;
+    color: #e2e8f0 !important;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.custom-dropdown .dropdown-item:hover {
+    background-color: #4361ee !important;
+    color: white !important;
+    transform: translateX(8px);
+}
+
+.custom-dropdown .dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 8px 0;
+}
+
+/* Efek hover pada item dropdown */
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+}
+
+/* Mencegah background biru berubah saat di-hover pada item yang sedang aktif */
+.dropdown-item.bg-primary:hover {
+    background-color: #0d6efd !important; /* Tetap biru */
+    opacity: 0.9;
+}

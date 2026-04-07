@@ -1,0 +1,6 @@
+.object-fit-cover {
+    object-fit: cover;
+}
+.bg-navy-lighter {
+    background-color: #1e293b; /* Warna card sedikit lebih terang dari background utama */
+}

@@ -1,0 +1,132 @@
+/* =========================================
+   MENTORS PAGE STYLE
+   ========================================= */
+
+/* 1. HERO KHUSUS MENTOR (Background) */
+/* Pastikan Anda punya gambar bg-mentors.jpg (misal foto tim rame-rame) */
+
+/* 2. FILTER BUTTONS */
+.bg-black-pearl { background-color: #080f1f; }
+
+.btn-active-cyan {
+    background-color: #0061f2;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-ghost:hover {
+    color: #38bdf8 !important; /* Cyan hover */
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 3. MENTOR CARD (GLASSMORPHISM) */
+.mentor-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden; /* Agar gambar tidak keluar radius */
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.mentor-card:hover {
+    transform: translateY(-10px); /* Kartu naik */
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 97, 242, 0.4); /* Border biru menyala */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 4. FOTO MENTOR & OVERLAY */
+.mentor-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Tinggi foto tetap agar rapi */
+    overflow: hidden;
+}
+
+.mentor-img-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top; /* Fokus ke wajah */
+    transition: transform 0.5s ease;
+    filter: grayscale(20%); /* Sedikit pudar biar estetik */
+}
+
+.mentor-card:hover .mentor-img-wrapper img {
+    transform: scale(1.1); /* Zoom in foto */
+    filter: grayscale(0%); /* Warna asli muncul */
+}
+
+/* Overlay Social Media (Hidden by default) */
+.mentor-social-overlay {
+    position: absolute;
+    bottom: -60px; /* Sembunyi di bawah */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(11, 22, 44, 0.9); /* Navy transparan */
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    transition: bottom 0.4s ease;
+}
+
+.mentor-card:hover .mentor-social-overlay {
+    bottom: 0; /* Muncul ke atas */
+}
+
+/* Social Icons */
+.social-icon {
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    background: #0061f2;
+    color: white;
+    transform: rotate(360deg);
+}
+
+/* 5. SKILL BADGES (Label Kecil) */
+.divider-small {
+    width: 40px;
+    height: 2px;
+    background-color: #0061f2;
+    opacity: 0.5;
+}
+
+.skill-badge {
+    font-size: 11px;
+    padding: 4px 12px;
+    background: rgba(0, 97, 242, 0.1);
+    color: #b0b8c4;
+    border: 1px solid rgba(0, 97, 242, 0.2);
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.mentor-card:hover .skill-badge {
+    color: white;
+    border-color: #0061f2;
+    background: rgba(0, 97, 242, 0.4);
+}
+
+/* Hiasan Glow Kiri */
+.glow-bg-left {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}

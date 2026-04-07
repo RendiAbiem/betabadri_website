@@ -1,0 +1,5 @@
+/* Styling khusus logo mitra */
+.partner-logo-box img {
+    object-fit: contain; /* Agar logo tidak gepeng */
+    max-width: 100%;
+}

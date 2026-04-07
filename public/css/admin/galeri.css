@@ -1,0 +1,7 @@
+/* Efek Zoom halus pada thumbnail galeri */
+.group-hover-zoom img {
+    transition: transform 0.3s ease;
+}
+.group-hover-zoom:hover img {
+    transform: scale(1.1); /* Perbesar sedikit saat hover */
+}
