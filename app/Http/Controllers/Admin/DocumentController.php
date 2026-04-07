@@ -13,53 +13,74 @@ class DocumentController extends Controller
     {
         $query = Document::with('user')->latest();
 
-        // Fitur filter kategori
+        // Fitur pencarian judul atau kategori
+        if ($request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('category', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Fitur filter kategori (tetap dipertahankan untuk link pill)
         if ($request->category) {
             $query->where('category', $request->category);
         }
 
         $documents = $query->paginate(12);
-        return view('pages.admins.documents.index', compact('documents'));
+
+        // Mengambil daftar kategori unik untuk ditampilkan di filter/pill
+        $uniqueCategories = Document::select('category')->distinct()->pluck('category');
+
+        return view('pages.admins.documents.index', compact('documents', 'uniqueCategories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|string',
-            'file' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png|max:10240', // Maks 10MB
+            'category' => 'required|string|max:50',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png,jpeg|max:10240', // File opsional (nullable)
+            'color' => 'nullable|string|in:yellow,blue,green,red',
+            'description' => 'nullable|string',
         ]);
 
-        $file = $request->file('file');
-        $path = $file->store('documents', 'public');
-
-        Document::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'category' => $request->category,
-            'color' => $request->color ?? 'yellow', // Default warna kuning khas sticky note
-            'file_path' => $path,
-            'file_type' => $file->getClientOriginalExtension(),
-            'file_size' => round($file->getSize() / 1024),
+        // Siapkan data dasar
+        $data = [
+            'user_id'     => auth()->id(),
+            'title'       => $request->title,
+            'category'    => $request->category,
+            'color'       => $request->color ?? 'yellow',
             'description' => $request->description,
-        ]);
+        ];
 
-        return back()->with('success', 'Dokumen berhasil diunggah!');
+        // Logika jika ada file yang diunggah
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $path = $file->store('documents', 'public');
+
+            $data['file_path'] = $path;
+            $data['file_type'] = $file->getClientOriginalExtension();
+            $data['file_size'] = round($file->getSize() / 1024); // Simpan dalam KB
+        }
+
+        Document::create($data);
+
+        return back()->with('success', 'Catatan berhasil ditempel!');
     }
 
-    // FUNGSI UNTUK MENDOWNLOAD FILE
     public function download($id)
     {
         $document = Document::findOrFail($id);
 
-        if (Storage::disk('public')->exists($document->file_path)) {
-            // Nama file saat didownload (Judul + Ekstensi Asli)
-            $downloadName = $document->title . '.' . $document->file_type;
+        // Cek apakah file_path ada (karena sekarang file bersifat opsional)
+        if (!$document->file_path) {
+            return back()->with('error', 'Catatan ini tidak memiliki lampiran file.');
+        }
 
-            // Dapatkan path absolute dari folder storage
+        if (Storage::disk('public')->exists($document->file_path)) {
+            $downloadName = $document->title . '.' . $document->file_type;
             $absolutePath = storage_path('app/public/' . $document->file_path);
 
-            // Gunakan response()->download() agar VS Code tidak menampilkan error
             return response()->download($absolutePath, $downloadName);
         }
 
@@ -70,14 +91,13 @@ class DocumentController extends Controller
     {
         $document = Document::findOrFail($id);
 
-        // Hapus fisik
-        if (Storage::disk('public')->exists($document->file_path)) {
+        // Hapus fisik jika ada
+        if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
             Storage::disk('public')->delete($document->file_path);
         }
 
-        // Hapus database
         $document->delete();
 
-        return back()->with('success', 'Dokumen berhasil dihapus.');
+        return back()->with('success', 'Catatan berhasil dihapus.');
     }
 }
