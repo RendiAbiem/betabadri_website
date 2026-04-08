@@ -11,7 +11,8 @@ class DocumentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Document::with('user')->latest();
+        // PERBAIKAN: Tambahkan where('user_id', auth()->id()) agar bersifat pribadi
+        $query = Document::where('user_id', auth()->id())->latest();
 
         // Fitur pencarian judul atau kategori
         if ($request->search) {
@@ -21,15 +22,18 @@ class DocumentController extends Controller
             });
         }
 
-        // Fitur filter kategori (tetap dipertahankan untuk link pill)
+        // Fitur filter kategori
         if ($request->category) {
             $query->where('category', $request->category);
         }
 
         $documents = $query->paginate(12);
 
-        // Mengambil daftar kategori unik untuk ditampilkan di filter/pill
-        $uniqueCategories = Document::select('category')->distinct()->pluck('category');
+        // PERBAIKAN: Ambil daftar kategori unik milik user yang login saja
+        $uniqueCategories = Document::where('user_id', auth()->id())
+                                    ->select('category')
+                                    ->distinct()
+                                    ->pluck('category');
 
         return view('pages.admins.documents.index', compact('documents', 'uniqueCategories'));
     }
@@ -39,28 +43,26 @@ class DocumentController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:50',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png,jpeg|max:10240', // File opsional (nullable)
+            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png,jpeg|max:10240',
             'color' => 'nullable|string|in:yellow,blue,green,red',
             'description' => 'nullable|string',
         ]);
 
-        // Siapkan data dasar
         $data = [
-            'user_id'     => auth()->id(),
+            'user_id'     => auth()->id(), // Pemilik note
             'title'       => $request->title,
             'category'    => $request->category,
             'color'       => $request->color ?? 'yellow',
             'description' => $request->description,
         ];
 
-        // Logika jika ada file yang diunggah
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $path = $file->store('documents', 'public');
 
             $data['file_path'] = $path;
             $data['file_type'] = $file->getClientOriginalExtension();
-            $data['file_size'] = round($file->getSize() / 1024); // Simpan dalam KB
+            $data['file_size'] = round($file->getSize() / 1024);
         }
 
         Document::create($data);
@@ -70,6 +72,9 @@ class DocumentController extends Controller
 
     public function update(Request $request, $id)
     {
+        // PERBAIKAN: Gunakan where user_id untuk memastikan user tidak bisa edit note orang lain via URL/ID
+        $document = Document::where('user_id', auth()->id())->findOrFail($id);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:50',
@@ -77,13 +82,6 @@ class DocumentController extends Controller
             'description' => 'nullable|string',
             'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png,jpeg|max:10240',
         ]);
-
-        $document = Document::findOrFail($id);
-
-        // Pastikan hanya pemilik atau admin yang bisa edit
-        if (auth()->user()->role !== 'admin' && $document->user_id !== auth()->id()) {
-            return back()->with('error', 'Anda tidak memiliki akses untuk mengubah catatan ini.');
-        }
 
         $data = [
             'title' => $request->title,
@@ -93,7 +91,6 @@ class DocumentController extends Controller
         ];
 
         if ($request->hasFile('file')) {
-            // Hapus file lama jika ada file baru yang diupload
             if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
                 Storage::disk('public')->delete($document->file_path);
             }
@@ -111,9 +108,9 @@ class DocumentController extends Controller
 
     public function download($id)
     {
-        $document = Document::findOrFail($id);
+        // PERBAIKAN: Pastikan hanya pemilik yang bisa download
+        $document = Document::where('user_id', auth()->id())->findOrFail($id);
 
-        // Cek apakah file_path ada (karena sekarang file bersifat opsional)
         if (!$document->file_path) {
             return back()->with('error', 'Catatan ini tidak memiliki lampiran file.');
         }
@@ -130,9 +127,9 @@ class DocumentController extends Controller
 
     public function destroy($id)
     {
-        $document = Document::findOrFail($id);
+        // PERBAIKAN: Pastikan hanya pemilik yang bisa hapus
+        $document = Document::where('user_id', auth()->id())->findOrFail($id);
 
-        // Hapus fisik jika ada
         if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
             Storage::disk('public')->delete($document->file_path);
         }
