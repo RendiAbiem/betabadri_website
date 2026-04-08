@@ -68,6 +68,47 @@ class DocumentController extends Controller
         return back()->with('success', 'Catatan berhasil ditempel!');
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|string|max:50',
+            'color' => 'required|in:yellow,blue,green,red',
+            'description' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,zip,jpg,png,jpeg|max:10240',
+        ]);
+
+        $document = Document::findOrFail($id);
+
+        // Pastikan hanya pemilik atau admin yang bisa edit
+        if (auth()->user()->role !== 'admin' && $document->user_id !== auth()->id()) {
+            return back()->with('error', 'Anda tidak memiliki akses untuk mengubah catatan ini.');
+        }
+
+        $data = [
+            'title' => $request->title,
+            'category' => $request->category,
+            'color' => $request->color,
+            'description' => $request->description,
+        ];
+
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada file baru yang diupload
+            if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
+                Storage::disk('public')->delete($document->file_path);
+            }
+
+            $file = $request->file('file');
+            $data['file_path'] = $file->store('documents', 'public');
+            $data['file_type'] = $file->getClientOriginalExtension();
+            $data['file_size'] = round($file->getSize() / 1024);
+        }
+
+        $document->update($data);
+
+        return back()->with('success', 'Catatan berhasil diperbarui!');
+    }
+
     public function download($id)
     {
         $document = Document::findOrFail($id);
