@@ -78,7 +78,6 @@
 </div>
 
 <div class="row g-4">
-
     <div class="col-lg-4 order-lg-2">
         <div class="content-card sticky-top" style="top: 100px; z-index: 10;">
             <div class="card-header border-bottom border-secondary border-opacity-25 pb-3 mb-3">
@@ -96,7 +95,6 @@
                         <p class="text-white-50 small px-2 mb-4">Unggah foto selfie/lokasi untuk melakukan Absen Masuk.</p>
                     </div>
 
-                    {{-- Form Clock In: Wajib Foto --}}
                     <form id="form-clock-in" action="{{ route('admin.attendance.clockIn') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="lat" id="lat">
@@ -107,7 +105,8 @@
                             <input type="file" name="image_in" class="form-control form-control-dark" accept="image/*" required>
                         </div>
 
-                        <button type="button" onclick="handleClockIn()" class="btn btn-primary w-100 py-3 fw-bold shadow-lg icon-link-hover">
+                        {{-- PERBAIKAN: Menambahkan 'this' pada handleClockIn --}}
+                        <button type="button" onclick="handleClockIn(this)" class="btn btn-primary w-100 py-3 fw-bold shadow-lg icon-link-hover">
                             <span>ABSEN MASUK</span> <i class="fas fa-map-marker-alt ms-2"></i>
                         </button>
                     </form>
@@ -123,7 +122,6 @@
                         </div>
                     </div>
 
-                    {{-- Form Clock Out: Paragraf Singkat & Bukti Kerja --}}
                     <form action="{{ route('admin.attendance.clockOut', $todayAttendance->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -198,6 +196,7 @@
         </div>
 
         <div class="content-card">
+            {{-- Tabel Riwayat --}}
             <div class="card-header d-flex justify-content-between align-items-center mb-3">
                 <h6 class="text-white fw-bold mb-0">Riwayat Kehadiran</h6>
                 <a href="{{ route('admin.attendance.export', request()->query()) }}" class="btn btn-sm btn-outline-success">
@@ -240,120 +239,17 @@
                                 </div>
                             </td>
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-icon btn-outline-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#showModal{{ $item->id }}"
-                                        title="Lihat Detail">
+                                <button type="button" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="modal" data-bs-target="#showModal{{ $item->id }}" title="Lihat Detail">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </td>
                         </tr>
-
-                        {{-- MODAL SHOW DETAIL --}}
-                        <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                <div class="modal-content border-0 shadow-lg" style="background-color: #1e293b;">
-                                    <div class="modal-header border-bottom border-secondary border-opacity-25 p-4">
-                                        <h5 class="modal-title text-white fw-bold">
-                                            <i class="fas fa-clipboard-list text-primary me-2"></i> Detail Kehadiran
-                                        </h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body p-4">
-                                        <div class="row g-4">
-                                            {{-- Foto Absen Masuk --}}
-                                            @if($item->image_in)
-                                            <div class="col-12">
-                                                <label class="text-secondary small text-uppercase ls-1 mb-2" style="font-size: 0.65rem;">Foto Absen Masuk</label>
-                                                <div class="rounded border border-secondary border-opacity-25 overflow-hidden" style="max-height: 300px;">
-                                                    <img src="{{ asset('storage/' . $item->image_in) }}" class="w-100 object-fit-cover" alt="Foto Masuk" style="max-height: 300px;">
-                                                </div>
-                                            </div>
-                                            @endif
-
-                                            <div class="col-md-6">
-                                                <div class="p-3 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-10">
-                                                    <small class="text-secondary d-block text-uppercase ls-1 mb-1" style="font-size: 0.65rem;">Nama Karyawan</small>
-                                                    <h6 class="text-white fw-bold mb-0">{{ $item->user->name }}</h6>
-                                                    <span class="badge bg-primary bg-opacity-10 text-primary mt-2">{{ ucfirst($item->user->role) }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="p-3 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-10">
-                                                    <small class="text-secondary d-block text-uppercase ls-1 mb-1" style="font-size: 0.65rem;">Tanggal & Mode</small>
-                                                    <h6 class="text-white fw-bold mb-0">{{ \Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</h6>
-                                                    <span class="text-cyan small fw-bold"><i class="fas fa-map-marker-alt me-1"></i> Bekerja via {{ $item->work_mode }}</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="text-center p-3 rounded border border-success border-opacity-25">
-                                                    <small class="text-success d-block fw-bold mb-1" style="font-size: 0.6rem;">JAM MASUK</small>
-                                                    <h5 class="text-white mb-0">{{ $item->clock_in ?? '--:--' }}</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="text-center p-3 rounded border border-danger border-opacity-25">
-                                                    <small class="text-danger d-block fw-bold mb-1" style="font-size: 0.6rem;">JAM PULANG</small>
-                                                    <h5 class="text-white mb-0">{{ $item->clock_out ?? '--:--' }}</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="text-center p-3 rounded border border-info border-opacity-25">
-                                                    <small class="text-info d-block fw-bold mb-1" style="font-size: 0.6rem;">TOTAL DURASI</small>
-                                                    <h5 class="text-white mb-0">
-                                                        @if($item->clock_in && $item->clock_out)
-                                                            {{ \Carbon\Carbon::parse($item->clock_in)->diff(\Carbon\Carbon::parse($item->clock_out))->format('%Hj %Im') }}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </h5>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="text-secondary small text-uppercase ls-1 mb-2" style="font-size: 0.65rem;">Laporan Aktivitas Harian</label>
-                                                <div class="p-3 rounded bg-navy-lighter border border-secondary border-opacity-10 text-white-50" style="white-space: pre-wrap; min-height: 80px; font-size: 0.9rem;">
-                                                    {{ $item->activity ?? 'Laporan belum diisi.' }}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="text-secondary small text-uppercase ls-1 mb-2" style="font-size: 0.65rem;">Berkas Pendukung</label>
-                                                @if($item->report_file)
-                                                    <div class="d-flex align-items-center p-3 rounded border border-primary border-opacity-25 bg-primary bg-opacity-5">
-                                                        <i class="fas fa-file-alt fa-2x text-primary me-3"></i>
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="text-white mb-0 small">Dokumen_Laporan_{{ $item->id }}.{{ pathinfo($item->report_file, PATHINFO_EXTENSION) }}</h6>
-                                                            <small class="text-secondary" style="font-size: 0.7rem;">Lampiran bukti kerja harian</small>
-                                                        </div>
-                                                        <a href="{{ asset('storage/' . $item->report_file) }}" target="_blank" class="btn btn-primary btn-sm px-3 fw-bold">
-                                                            <i class="fas fa-download me-1"></i> BUKA
-                                                        </a>
-                                                    </div>
-                                                @else
-                                                    <div class="text-center py-3 border border-dashed border-secondary border-opacity-25 rounded text-secondary small fst-italic">
-                                                        Tidak ada lampiran file.
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer border-top border-secondary border-opacity-25 p-3">
-                                        <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal">TUTUP</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- END MODAL --}}
-
                         @empty
                         <tr><td colspan="5" class="text-center py-5 text-white-50 small">Tidak ada data ditemukan.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-
             <div class="mt-4 px-2">
                 {{ $attendances->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
@@ -370,13 +266,12 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    function handleClockIn() {
-        const btn = event.currentTarget;
+    // PERBAIKAN: Fungsi menerima parameter 'btn' langsung
+    function handleClockIn(btn) {
         const form = document.getElementById('form-clock-in');
         const fileInput = form.querySelector('input[name="image_in"]');
         const originalText = btn.innerHTML;
 
-        // Validasi file dulu
         if (!fileInput.value) {
             alert("Harap pilih/ambil foto terlebih dahulu.");
             return;
@@ -390,18 +285,25 @@
                 function(position) {
                     document.getElementById('lat').value = position.coords.latitude;
                     document.getElementById('lng').value = position.coords.longitude;
+
+                    // Indikasi sukses sebelum submit
+                    btn.innerHTML = '<i class="fas fa-check me-2"></i> Lokasi Ditemukan...';
                     form.submit();
                 },
                 function(error) {
                     btn.disabled = false;
                     btn.innerHTML = originalText;
-                    alert("GPS tidak aktif atau akses lokasi ditolak browser. Lokasi dibutuhkan untuk verifikasi.");
+
+                    let msg = "Gagal mendapatkan lokasi.";
+                    if(error.code == 1) msg = "Akses lokasi ditolak. Harap izinkan GPS di browser.";
+                    alert(msg);
                 },
-                { enableHighAccuracy: true }
+                { enableHighAccuracy: true, timeout: 10000 }
             );
         } else {
             alert("Browser tidak mendukung geolokasi.");
             btn.disabled = false;
+            btn.innerHTML = originalText;
         }
     }
 </script>
@@ -409,15 +311,10 @@
 <style>
     .ls-1 { letter-spacing: 1px; }
     .btn-icon {
-        width: 32px;
-        height: 32px;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        width: 32px; height: 32px; padding: 0;
+        display: inline-flex; align-items: center; justify-content: center;
         border-radius: 8px;
     }
     .bg-navy-lighter { background-color: rgba(30, 41, 59, 0.5); }
-    .border-dashed { border-style: dashed !important; }
 </style>
 @endsection
