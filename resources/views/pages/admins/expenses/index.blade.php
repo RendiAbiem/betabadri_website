@@ -30,9 +30,7 @@
     </div>
 @endif
 
-{{-- ================================================= --}}
-{{-- 1. SECTION CARD BULANAN (JANUARI - DESEMBER)      --}}
-{{-- ================================================= --}}
+{{-- 1. SECTION CARD BULANAN --}}
 <div class="row g-3 mb-4">
     @foreach($monthlyRecap as $recap)
     <div class="col-6 col-md-4 col-xl-2">
@@ -44,7 +42,6 @@
                     {{ $recap->month_name }}
                 </span>
 
-                {{-- Nominal Uang Rekap (Hanya Admin) --}}
                 <h6 class="fw-bold mb-0 {{ $recap->total > 0 ? 'text-white' : 'text-white-50' }}">
                     @if(auth()->user()->role === 'admin')
                         @if($recap->total > 0)
@@ -72,12 +69,9 @@
     @endforeach
 </div>
 
-
 <div class="row g-4">
 
-    {{-- ================================================= --}}
-    {{-- 2. TABEL HISTORY BULANAN (REKAPITULASI)           --}}
-    {{-- ================================================= --}}
+    {{-- 2. TABEL REKAP BULANAN --}}
     <div class="col-lg-4">
         <div class="content-card h-100">
             <div class="card-header border-bottom border-secondary border-opacity-25 pb-3 mb-3">
@@ -143,9 +137,7 @@
         </div>
     </div>
 
-    {{-- ================================================= --}}
-    {{-- 3. TABEL DETAIL TRANSAKSI                         --}}
-    {{-- ================================================= --}}
+    {{-- 3. TABEL DETAIL TRANSAKSI --}}
     <div class="col-lg-8">
         <div class="content-card h-100">
             <div class="card-header border-bottom border-secondary border-opacity-25 pb-3 mb-3 d-flex justify-content-between align-items-center">
@@ -167,13 +159,10 @@
                     </thead>
                     <tbody>
                         @forelse($expenses as $expense)
-
-                        {{-- Logika untuk mengecek jumlah gambar (JSON / Fallback String Lama) --}}
                         @php
                             $images = json_decode($expense->image, true);
                             $imgCount = is_array($images) ? count($images) : ($expense->image ? 1 : 0);
                         @endphp
-
                         <tr class="border-bottom border-secondary border-opacity-10">
                             <td class="ps-3 text-secondary small">{{ $expense->date->format('d/m/y') }}</td>
                             <td>
@@ -193,15 +182,12 @@
                                 @else
                                     <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">Wait</span>
                                 @endif
-
-                                {{-- Icon Clip jika ada lampiran --}}
                                 @if($imgCount > 0)
                                     <i class="fas fa-paperclip text-info ms-2 opacity-75" title="{{ $imgCount }} Lampiran"></i>
                                 @endif
                             </td>
                             <td class="text-end pe-3">
                                 <div class="d-flex justify-content-end gap-1">
-                                    {{-- TOMBOL LIHAT DETAIL --}}
                                     <button type="button" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="modal" data-bs-target="#detailModal{{ $expense->id }}" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -217,7 +203,6 @@
                                         </form>
                                     @endif
 
-                                    {{-- Hapus (Admin semua, User cuma miliknya yg pending) --}}
                                     @if(auth()->user()->role === 'admin' || ($expense->user_id == auth()->id() && $expense->status == 'pending'))
                                     <form action="{{ route('admin.expenses.destroy', $expense->id) }}" method="POST">
                                         @csrf @method('DELETE')
@@ -228,9 +213,7 @@
                             </td>
                         </tr>
 
-                        {{-- ================================================= --}}
-                        {{-- MODAL DETAIL TRANSAKSI                            --}}
-                        {{-- ================================================= --}}
+                        {{-- MODAL DETAIL --}}
                         <div class="modal fade" id="detailModal{{ $expense->id }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content" style="background-color: #1e293b; border: 1px solid rgba(255,255,255,0.1);">
@@ -239,7 +222,6 @@
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body p-4">
-
                                         <div class="row mb-3">
                                             <div class="col-6">
                                                 <small class="text-secondary d-block text-uppercase letter-spacing-1">Tanggal</small>
@@ -265,10 +247,8 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <small class="text-secondary d-block text-uppercase letter-spacing-1">Deskripsi Lengkap</small>
-                                            <p class="text-white-50 mb-0" style="white-space: pre-wrap; word-break: break-word; overflow-wrap: break-word;">
-                                                {{ $expense->description ?: 'Tidak ada deskripsi tambahan.' }}
-                                            </p>
+                                            <small class="text-secondary d-block text-uppercase letter-spacing-1 mb-1">Deskripsi Lengkap</small>
+                                            <div class="text-white-50 small" style="white-space: pre-wrap; word-break: break-word;">{{ $expense->description ?: 'Tidak ada deskripsi tambahan.' }}</div>
                                         </div>
 
                                         <div class="mb-4 p-3 rounded bg-dark border border-secondary border-opacity-25">
@@ -276,11 +256,9 @@
                                             <span class="text-success fw-bold fs-4">Rp {{ number_format($expense->amount, 0, ',', '.') }}</span>
                                         </div>
 
-                                        {{-- Galeri Lampiran --}}
                                         @if($imgCount > 0)
                                             <div class="mt-4">
                                                 <small class="text-secondary d-block text-uppercase letter-spacing-1 mb-2">Lampiran / Bukti Nota ({{ $imgCount }} File)</small>
-
                                                 @if(is_array($images))
                                                     <div class="row g-2">
                                                         @foreach($images as $img)
@@ -292,16 +270,13 @@
                                                         @endforeach
                                                     </div>
                                                 @else
-                                                    {{-- Fallback jika data lama formatnya string tunggal --}}
                                                     <a href="{{ asset('storage/' . $expense->image) }}" target="_blank">
                                                         <img src="{{ asset('storage/' . $expense->image) }}" alt="Bukti" class="img-fluid rounded border border-secondary border-opacity-25 w-100 object-fit-cover" style="max-height: 250px;">
                                                     </a>
                                                 @endif
-
                                                 <small class="text-muted d-block mt-2 text-center"><i class="fas fa-search-plus"></i> Klik gambar untuk memperbesar</small>
                                             </div>
                                         @endif
-
                                     </div>
                                     <div class="modal-footer border-top border-secondary border-opacity-25">
                                         <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Tutup</button>
@@ -309,8 +284,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- END MODAL --}}
-
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-4 text-muted small">Belum ada data pengeluaran.</td>
