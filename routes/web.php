@@ -106,6 +106,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         // ==========================================
         Route::get('/documents', [\App\Http\Controllers\Admin\DocumentController::class, 'index'])->name('documents.index');
         Route::post('/documents', [\App\Http\Controllers\Admin\DocumentController::class, 'store'])->name('documents.store');
+        Route::put('/documents/{id}', [\App\Http\Controllers\Admin\DocumentController::class, 'update'])->name('documents.update');
         Route::get('/documents/{id}/download', [\App\Http\Controllers\Admin\DocumentController::class, 'download'])->name('documents.download');
         Route::delete('/documents/{id}', [\App\Http\Controllers\Admin\DocumentController::class, 'destroy'])->name('documents.destroy');
     });
