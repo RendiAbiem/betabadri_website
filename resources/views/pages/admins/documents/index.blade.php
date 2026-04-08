@@ -10,6 +10,7 @@
         <p class="text-secondary small mb-0">Arsip digital dan catatan operasional bergaya sticky notes.</p>
     </div>
     <div class="d-flex gap-2">
+        {{-- Form Pencarian Cepat --}}
         <form action="{{ route('admin.documents.index') }}" method="GET" class="d-none d-md-flex">
             <div class="input-group">
                 <input type="text" name="search" class="form-control form-control-dark rounded-start-pill ps-3" placeholder="Cari catatan..." value="{{ request('search') }}">
@@ -70,29 +71,32 @@
                     <i class="fas fa-thumbtack text-danger opacity-75 shadow-sm" style="font-size: 1.1rem;"></i>
                 </div>
 
-                {{-- Tombol Edit di pojok kanan atas --}}
+                {{-- Tombol Edit --}}
                 @if(auth()->user()->role === 'admin' || $doc->user_id === auth()->id())
                 <button class="btn btn-link position-absolute top-0 end-0 p-3 text-decoration-none opacity-50 hover-opacity-100"
-                        data-bs-toggle="modal" data-bs-target="#editModal{{ $doc->id }}" style="color: {{ $style['text'] }};">
+                        data-bs-toggle="modal" data-bs-target="#editModal{{ $doc->id }}" style="color: {{ $style['text'] }}; z-index: 2;">
                     <i class="fas fa-edit small"></i>
                 </button>
                 @endif
 
-                <div class="mb-3">
-                    <span class="badge rounded-pill mb-2" style="background-color: {{ $style['badge'] }}; color: {{ $style['text'] }}; font-size: 0.6rem;">
+                <div class="mb-3 pe-4">
+                    {{-- Badge Kategori (Sekarang bisa patah kata jika kepanjangan) --}}
+                    <span class="badge rounded-pill mb-2 d-inline-block text-wrap text-start" style="background-color: {{ $style['badge'] }}; color: {{ $style['text'] }}; font-size: 0.6rem; max-width: 100%; word-break: break-all;">
                         {{ strtoupper($doc->category) }}
                     </span>
-                    <h6 class="fw-bold mb-1" style="color: {{ $style['text'] }}; line-height: 1.4;">{{ $doc->title }}</h6>
+                    {{-- Judul (Sekarang tidak akan meluber keluar) --}}
+                    <h6 class="fw-bold mb-1" style="color: {{ $style['text'] }}; line-height: 1.4; word-break: break-word;">{{ $doc->title }}</h6>
                 </div>
 
-                <div class="mb-4 flex-grow-1" style="color: {{ $style['text'] }}; opacity: 0.85; font-size: 0.85rem; font-style: italic;">
+                {{-- Isi Deskripsi (Perbaikan utama di sini: word-break) --}}
+                <div class="mb-4 flex-grow-1" style="color: {{ $style['text'] }}; opacity: 0.85; font-size: 0.85rem; font-style: italic; word-break: break-word;">
                     {!! nl2br(e($doc->description)) ?: 'Tidak ada deskripsi.' !!}
                 </div>
 
                 <div class="mt-auto pt-3 border-top border-dark border-opacity-10 d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center overflow-hidden">
-                        <i class="fas {{ $icon }} me-2 fs-5" style="color: {{ $style['text'] }};"></i>
-                        <span class="x-small fw-bold text-uppercase text-truncate" style="color: {{ $style['text'] }}; max-width: 80px;">
+                        <i class="fas {{ $icon }} me-2 fs-5 flex-shrink-0" style="color: {{ $style['text'] }};"></i>
+                        <span class="x-small fw-bold text-uppercase text-truncate" style="color: {{ $style['text'] }};">
                             {{ $doc->file_path ? '.' . $doc->file_type : 'CATATAN' }}
                         </span>
                     </div>
@@ -121,7 +125,7 @@
             </div>
         </div>
 
-        {{-- MODAL EDIT (Dibuat unik per ID) --}}
+        {{-- MODAL EDIT --}}
         <div class="modal fade" id="editModal{{ $doc->id }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow-lg" style="background-color: #1e293b;">
@@ -174,7 +178,7 @@
         <div class="col-12 text-center py-5">
             <div class="opacity-25 text-white">
                 <i class="fas fa-sticky-note fa-4x mb-3"></i>
-                <h6>Belum ada catatan di kategori ini.</h6>
+                <h6>Belum ada catatan.</h6>
             </div>
         </div>
     @endforelse
@@ -184,7 +188,7 @@
     {{ $documents->appends(request()->query())->links('pagination::bootstrap-5') }}
 </div>
 
-{{-- MODAL UPLOAD (Sama seperti sebelumnya) --}}
+{{-- MODAL UPLOAD --}}
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="background-color: #1e293b;">
@@ -249,6 +253,9 @@
         min-height: 250px;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         transform: rotate(-1.5deg);
+        overflow-wrap: break-word; /* Tambahan untuk memastikan teks terpotong */
+        word-wrap: break-word;
+        hyphens: auto;
     }
     .sticky-note:nth-child(even) { transform: rotate(1.2deg); }
     .sticky-note:nth-child(3n) { transform: rotate(-0.8deg); }
