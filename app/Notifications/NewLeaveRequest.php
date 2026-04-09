@@ -6,10 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Leave;
 
 class NewLeaveRequest extends Notification
 {
     use Queueable;
+
+    public $leave;
 
     /**
      * Create a new notification instance.
@@ -24,9 +27,8 @@ class NewLeaveRequest extends Notification
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
-    {
-        return ['mail'];
+    public function via($notifiable) {
+        return ['database'];
     }
 
     /**
@@ -45,10 +47,13 @@ class NewLeaveRequest extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
-    {
+    public function toArray($notifiable) {
         return [
-            //
+            'leave_id' => $this->leave->id, // Tambahkan baris ini
+            'title' => 'Pengajuan Cuti Baru',
+            'message' => 'Staff ' . $this->leave->user->name . ' mengajukan cuti.',
+            'url' => route('admin.leaves.index'), // Link ke halaman approval
+            'icon' => 'fas fa-calendar-plus text-primary'
         ];
     }
 }

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
+use App\Models\User;
+use App\Notifications\NewLeaveRequest;
+use App\Notifications\LeaveStatusUpdated;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
 
 class LeaveController extends Controller
 {
@@ -22,7 +26,6 @@ class LeaveController extends Controller
         return view('pages.admins.leaves.index', compact('leaves'));
     }
 
-    // TAMBAHAN: Method untuk menampilkan form
     public function create()
     {
         return view('pages.admins.leaves.create');
@@ -43,7 +46,6 @@ class LeaveController extends Controller
             $end = Carbon::parse($request->end_date);
             $totalDays = $start->diffInDays($end) + 1;
 
-            // Cek minimal 7 hari untuk Cuti Tahunan
             if ($request->type === 'Cuti Tahunan/Libur' && Carbon::now()->diffInDays($start, false) < 7) {
                 return back()->withInput()->with('error', 'Cuti tahunan harus diajukan minimal 7 hari sebelumnya.');
             }
@@ -53,9 +55,9 @@ class LeaveController extends Controller
                 $path = $request->file('attachment')->store('leaves', 'public');
             }
 
-            Leave::create([
+            $leave = Leave::create([
                 'user_id' => auth()->id(),
-                'type' => $request->type, // Sesuai dengan input name="type"
+                'type' => $request->type,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'total_days' => $totalDays,
@@ -64,22 +66,28 @@ class LeaveController extends Controller
                 'status' => 'pending'
             ]);
 
-            // Ubah menjadi redirect ke index agar setelah submit kembali ke tabel
+            // NOTIFIKASI: Kirim ke semua Admin
+            $admins = User::where('role', 'admin')->get();
+            Notification::send($admins, new NewLeaveRequest($leave));
+
             return redirect()->route('admin.leaves.index')->with('success', 'Pengajuan cuti berhasil dikirim!');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
         }
     }
 
-    // TAMBAHAN: Method untuk menampilkan detail
     public function show($id)
     {
         $leave = Leave::with('user')->findOrFail($id);
 
-        // Proteksi: Staff hanya bisa lihat miliknya sendiri
         if(auth()->user()->role !== 'admin' && $leave->user_id !== auth()->id()) {
             abort(403, 'Akses ditolak.');
         }
+
+        // Opsional: Tandai notifikasi terkait sebagai "sudah dibaca" saat detail dibuka
+        auth()->user()->unreadNotifications
+            ->where('data.leave_id', $id) // Pastikan di class Notification kamu menambahkan 'leave_id' => $this->leave->id
+            ->markAsRead();
 
         return view('pages.admins.leaves.show', compact('leave'));
     }
@@ -88,17 +96,33 @@ class LeaveController extends Controller
     {
         $leave = Leave::findOrFail($id);
         $leave->update(['status' => 'approved']);
+
+        // NOTIFIKASI: Kirim ke Staff/Mentor yang mengajukan
+        $leave->user->notify(new LeaveStatusUpdated($leave));
+
         return back()->with('success', 'Pengajuan cuti telah disetujui.');
     }
 
     public function reject(Request $request, $id)
     {
         $request->validate(['admin_note' => 'required|string']);
+
         $leave = Leave::findOrFail($id);
         $leave->update([
             'status' => 'rejected',
             'admin_note' => $request->admin_note
         ]);
+
+        // NOTIFIKASI: Kirim ke Staff/Mentor yang mengajukan
+        $leave->user->notify(new LeaveStatusUpdated($leave));
+
         return back()->with('success', 'Pengajuan cuti telah ditolak.');
+    }
+
+    // Tambahan: Method untuk menandai semua notifikasi dibaca
+    public function markAllRead()
+    {
+        auth()->user()->unreadNotifications->markAsRead();
+        return back();
     }
 }

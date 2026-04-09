@@ -6,10 +6,15 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Leave;
+
 
 class LeaveStatusUpdated extends Notification
 {
     use Queueable;
+
+    public $leave;
+
 
     /**
      * Create a new notification instance.
@@ -45,10 +50,15 @@ class LeaveStatusUpdated extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
-    {
+    public function toArray($notifiable) {
+        $status = $this->leave->status == 'approved' ? 'DISETUJUI' : 'DITOLAK';
+        $color = $this->leave->status == 'approved' ? 'text-success' : 'text-danger';
+
         return [
-            //
+            'title' => 'Update Status Cuti',
+            'message' => 'Pengajuan cuti Anda telah ' . $status,
+            'url' => route('admin.leaves.index'),
+            'icon' => 'fas fa-info-circle ' . $color
         ];
     }
 }
