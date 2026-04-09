@@ -100,6 +100,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
         Route::post('/leaves', [LeaveController::class, 'store'])->name('leaves.store');
         Route::get('/leaves/{id}', [LeaveController::class, 'show'])->name('leaves.show');
+        Route::post('/leaves/mark-all-read', [LeaveController::class, 'markAllRead'])->name('leaves.markAllRead');
 
         // ==========================================
         // TAMBAHKAN INI: Modul Pusat Dokumen (E-Archive)

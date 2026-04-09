@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log; // Import Log untuk debugging
 
 class LeaveController extends Controller
 {
@@ -66,12 +67,18 @@ class LeaveController extends Controller
                 'status' => 'pending'
             ]);
 
-            // NOTIFIKASI: Kirim ke semua Admin
+            // --- PROSES NOTIFIKASI ---
             $admins = User::where('role', 'admin')->get();
-            Notification::send($admins, new NewLeaveRequest($leave));
+
+            if ($admins->isNotEmpty()) {
+                Notification::send($admins, new NewLeaveRequest($leave));
+            } else {
+                Log::warning('Notifikasi gagal dikirim: Tidak ada user dengan role admin.');
+            }
 
             return redirect()->route('admin.leaves.index')->with('success', 'Pengajuan cuti berhasil dikirim!');
         } catch (\Exception $e) {
+            Log::error('Error Simpan Cuti: ' . $e->getMessage());
             return back()->withInput()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
         }
     }
@@ -84,9 +91,9 @@ class LeaveController extends Controller
             abort(403, 'Akses ditolak.');
         }
 
-        // Opsional: Tandai notifikasi terkait sebagai "sudah dibaca" saat detail dibuka
+        // Menandai notifikasi spesifik sebagai dibaca
         auth()->user()->unreadNotifications
-            ->where('data.leave_id', $id) // Pastikan di class Notification kamu menambahkan 'leave_id' => $this->leave->id
+            ->where('data.leave_id', (int)$id) // Casting ke integer untuk keamanan
             ->markAsRead();
 
         return view('pages.admins.leaves.show', compact('leave'));
@@ -97,8 +104,10 @@ class LeaveController extends Controller
         $leave = Leave::findOrFail($id);
         $leave->update(['status' => 'approved']);
 
-        // NOTIFIKASI: Kirim ke Staff/Mentor yang mengajukan
-        $leave->user->notify(new LeaveStatusUpdated($leave));
+        // NOTIFIKASI ke Pengaju
+        if ($leave->user) {
+            $leave->user->notify(new LeaveStatusUpdated($leave));
+        }
 
         return back()->with('success', 'Pengajuan cuti telah disetujui.');
     }
@@ -113,13 +122,14 @@ class LeaveController extends Controller
             'admin_note' => $request->admin_note
         ]);
 
-        // NOTIFIKASI: Kirim ke Staff/Mentor yang mengajukan
-        $leave->user->notify(new LeaveStatusUpdated($leave));
+        // NOTIFIKASI ke Pengaju
+        if ($leave->user) {
+            $leave->user->notify(new LeaveStatusUpdated($leave));
+        }
 
         return back()->with('success', 'Pengajuan cuti telah ditolak.');
     }
 
-    // Tambahan: Method untuk menandai semua notifikasi dibaca
     public function markAllRead()
     {
         auth()->user()->unreadNotifications->markAsRead();
