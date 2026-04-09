@@ -20,7 +20,7 @@
     </div>
 </div>
 
-{{-- Pesan Error Validasi --}}
+{{-- Notifikasi --}}
 @if ($errors->any())
     <div class="alert alert-danger bg-danger bg-opacity-10 text-danger border-danger border-opacity-25 mb-4 small">
         <ul class="mb-0">
@@ -38,7 +38,6 @@
 @endif
 
 <div class="row g-3 mb-4">
-    {{-- Stat Cards --}}
     <div class="col-md-4">
         <div class="stat-card d-flex align-items-center p-3 h-100 border-start border-4 border-success bg-navy-lighter">
             <div class="p-3 rounded-circle bg-success bg-opacity-10 text-success me-3">
@@ -105,8 +104,7 @@
                             <input type="file" name="image_in" class="form-control form-control-dark" accept="image/*" required>
                         </div>
 
-                        {{-- PERBAIKAN: Menambahkan 'this' pada handleClockIn --}}
-                        <button type="button" onclick="handleClockIn(this)" class="btn btn-primary w-100 py-3 fw-bold shadow-lg icon-link-hover">
+                        <button type="button" onclick="handleClockIn(this)" class="btn btn-primary w-100 py-3 fw-bold shadow-lg">
                             <span>ABSEN MASUK</span> <i class="fas fa-map-marker-alt ms-2"></i>
                         </button>
                     </form>
@@ -127,8 +125,7 @@
                         @method('PUT')
                         <div class="form-group mb-3 text-start">
                             <label class="text-white-50 small mb-2">Ringkasan Kegiatan Hari Ini <span class="text-danger">*</span></label>
-                            <textarea name="activity" class="form-control form-control-dark" rows="3" placeholder="Ceritakan singkat apa yang Anda kerjakan..." required maxlength="255">{{ old('activity') }}</textarea>
-                            <small class="text-muted" style="font-size: 0.65rem;">Maksimal 255 karakter.</small>
+                            <textarea name="activity" class="form-control form-control-dark" rows="3" placeholder="Ceritakan singkat apa yang Anda kerjakan..." required maxlength="255"></textarea>
                         </div>
                         <div class="form-group mb-4 text-start">
                             <label class="text-white-50 small mb-2">Upload Bukti Kerja (File/Doc/Gambar) <span class="text-danger">*</span></label>
@@ -138,15 +135,13 @@
                             <i class="fas fa-sign-out-alt me-2"></i> KIRIM & PULANG
                         </button>
                     </form>
-
                 @else
                     <div class="py-4">
                         <i class="fas fa-clipboard-check fa-4x text-success mb-3"></i>
                         <h4 class="text-white fw-bold">Tugas Selesai!</h4>
-                        <p class="text-white-50 small">Terima kasih atas dedikasinya hari ini.</p>
                         <div class="d-flex justify-content-center gap-3 mt-3">
                             <div class="text-center px-3 py-2 bg-navy-lighter rounded">
-                                <small class="text-secondary d-block" style="font-size:0.6rem">MASUK ({{ $todayAttendance->work_mode }})</small>
+                                <small class="text-secondary d-block" style="font-size:0.6rem">MASUK</small>
                                 <span class="text-white fw-bold">{{ $todayAttendance->clock_in }}</span>
                             </div>
                             <div class="text-center px-3 py-2 bg-navy-lighter rounded">
@@ -161,7 +156,6 @@
     </div>
 
     <div class="col-lg-8 order-lg-1">
-        {{-- Filter Data --}}
         <div class="content-card mb-4 p-4">
             <h5 class="text-white fw-bold mb-3"><i class="fas fa-filter me-2 text-primary"></i> Filter Data</h5>
             <form action="" method="GET">
@@ -196,7 +190,6 @@
         </div>
 
         <div class="content-card">
-            {{-- Tabel Riwayat --}}
             <div class="card-header d-flex justify-content-between align-items-center mb-3">
                 <h6 class="text-white fw-bold mb-0">Riwayat Kehadiran</h6>
                 <a href="{{ route('admin.attendance.export', request()->query()) }}" class="btn btn-sm btn-outline-success">
@@ -220,12 +213,8 @@
                         <tr>
                             <td class="text-secondary">{{ $attendances->firstItem() + $key }}</td>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <div class="text-white fw-bold small">{{ $item->user->name }}</div>
-                                        <div class="text-secondary" style="font-size: 0.7rem;">{{ \Carbon\Carbon::parse($item->date)->format('d M Y') }}</div>
-                                    </div>
-                                </div>
+                                <div class="text-white fw-bold small">{{ $item->user->name }}</div>
+                                <div class="text-secondary" style="font-size: 0.7rem;">{{ \Carbon\Carbon::parse($item->date)->format('d M Y') }}</div>
                             </td>
                             <td>
                                 <span class="badge bg-opacity-10 {{ $item->work_mode == 'WFO' ? 'bg-info text-info border-info' : 'bg-primary text-primary border-primary' }} border small">
@@ -239,11 +228,63 @@
                                 </div>
                             </td>
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="modal" data-bs-target="#showModal{{ $item->id }}" title="Lihat Detail">
+                                <button type="button" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="modal" data-bs-target="#showModal{{ $item->id }}">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </td>
                         </tr>
+
+                        <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content border-0 shadow-lg" style="background-color: #1e293b;">
+                                    <div class="modal-header border-bottom border-secondary border-opacity-25 p-4">
+                                        <h5 class="modal-title text-white fw-bold"><i class="fas fa-info-circle text-info me-2"></i> Detail Kehadiran</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body p-4 text-start">
+                                        <div class="row g-4">
+                                            <div class="col-md-6 border-end border-secondary border-opacity-25">
+                                                <h6 class="text-secondary small fw-bold text-uppercase mb-3">Foto Selfie Masuk</h6>
+                                                @if($item->image_in)
+                                                    <img src="{{ asset('storage/' . $item->image_in) }}" class="img-fluid rounded border border-secondary border-opacity-25 w-100" style="max-height: 350px; object-fit: cover;">
+                                                @else
+                                                    <div class="bg-dark rounded d-flex align-items-center justify-content-center text-secondary small" style="height: 250px;">Tidak ada foto</div>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-6 text-start">
+                                                <h6 class="text-secondary small fw-bold text-uppercase mb-3">Laporan Kegiatan</h6>
+                                                <div class="mb-3">
+                                                    <label class="text-secondary x-small d-block mb-1">RINGKASAN:</label>
+                                                    <div class="p-3 bg-navy-lighter rounded text-white small italic border border-secondary border-opacity-10">
+                                                        "{{ $item->activity ?? 'Belum ada ringkasan.' }}"
+                                                    </div>
+                                                </div>
+                                                @if($item->report_file)
+                                                <div class="mb-3">
+                                                    <label class="text-secondary x-small d-block mb-1">BUKTI KERJA:</label>
+                                                    <a href="{{ asset('storage/' . $item->report_file) }}" target="_blank" class="btn btn-sm btn-navy-lighter text-white border border-secondary border-opacity-25 w-100 text-start">
+                                                        <i class="fas fa-file-download me-2 text-success"></i> Lihat Lampiran
+                                                    </a>
+                                                </div>
+                                                @endif
+                                                <div class="mt-4 pt-3 border-top border-secondary border-opacity-10">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <small class="text-secondary d-block">MASUK:</small>
+                                                            <span class="text-success fw-bold">{{ $item->clock_in ?? '--:--' }}</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <small class="text-secondary d-block">PULANG:</small>
+                                                            <span class="text-danger fw-bold">{{ $item->clock_out ?? '--:--' }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @empty
                         <tr><td colspan="5" class="text-center py-5 text-white-50 small">Tidak ada data ditemukan.</td></tr>
                         @endforelse
@@ -266,37 +307,30 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // PERBAIKAN: Fungsi menerima parameter 'btn' langsung
     function handleClockIn(btn) {
         const form = document.getElementById('form-clock-in');
         const fileInput = form.querySelector('input[name="image_in"]');
         const originalText = btn.innerHTML;
 
         if (!fileInput.value) {
-            alert("Harap pilih/ambil foto terlebih dahulu.");
+            alert("Harap pilih foto terlebih dahulu.");
             return;
         }
 
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Mendeteksi Lokasi...';
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Lokasi...';
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function(position) {
                     document.getElementById('lat').value = position.coords.latitude;
                     document.getElementById('lng').value = position.coords.longitude;
-
-                    // Indikasi sukses sebelum submit
-                    btn.innerHTML = '<i class="fas fa-check me-2"></i> Lokasi Ditemukan...';
                     form.submit();
                 },
                 function(error) {
                     btn.disabled = false;
                     btn.innerHTML = originalText;
-
-                    let msg = "Gagal mendapatkan lokasi.";
-                    if(error.code == 1) msg = "Akses lokasi ditolak. Harap izinkan GPS di browser.";
-                    alert(msg);
+                    alert("Gagal mendapatkan lokasi. Harap izinkan GPS.");
                 },
                 { enableHighAccuracy: true, timeout: 10000 }
             );
@@ -316,5 +350,6 @@
         border-radius: 8px;
     }
     .bg-navy-lighter { background-color: rgba(30, 41, 59, 0.5); }
+    .x-small { font-size: 0.7rem; }
 </style>
 @endsection
