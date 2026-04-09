@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Leave;
 
@@ -17,42 +15,30 @@ class NewLeaveRequest extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Leave $leave)
     {
-        //
+        // PERBAIKAN: Isi variabel agar data bisa dibaca oleh method toArray()
+        $this->leave = $leave;
     }
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
      */
-    public function via($notifiable) {
+    public function via($notifiable)
+    {
         return ['database'];
     }
 
     /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
-    }
-
-    /**
      * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
      */
-    public function toArray($notifiable) {
+    public function toArray($notifiable)
+    {
         return [
-            'leave_id' => $this->leave->id, // Tambahkan baris ini
+            'leave_id' => $this->leave->id,
             'title' => 'Pengajuan Cuti Baru',
             'message' => 'Staff ' . $this->leave->user->name . ' mengajukan cuti.',
-            'url' => route('admin.leaves.index'), // Link ke halaman approval
+            'url' => route('admin.leaves.show', $this->leave->id), // Diarahkan langsung ke detail
             'icon' => 'fas fa-calendar-plus text-primary'
         ];
     }

@@ -29,19 +29,34 @@
 
         .x-small { font-size: 0.65rem; }
 
-        /* PERBAIKAN ICON KALENDER UNTUK INPUT DATE */
         input[type="date"] {
-            color-scheme: dark; /* Memaksa browser menggunakan UI Date Picker mode gelap */
+            color-scheme: dark;
         }
 
-        /* Fallback jika browser tidak mendukung color-scheme */
         .form-control-dark::-webkit-calendar-picker-indicator {
             filter: invert(1);
             cursor: pointer;
             opacity: 0.8;
         }
-        .form-control-dark::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
+
+        /* Dropdown Notification Style */
+        .dropdown-notifications {
+            width: 320px;
+            max-height: 400px;
+            background-color: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .notification-item {
+            transition: 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            white-space: normal;
+        }
+        .notification-item:hover { background-color: rgba(255,255,255,0.05); }
+        .notification-item.unread { background-color: rgba(67, 97, 238, 0.05); }
+
+        .notification-list {
+            max-height: 320px;
+            overflow-y: auto;
         }
     </style>
 
@@ -67,14 +82,8 @@
 
                 @php
                     $role = auth()->user()->role;
-
-                    if ($role === 'mentor') {
-                        $dashRoute = route('mentor.dashboard');
-                        $dashActive = request()->routeIs('mentor.dashboard');
-                    } else {
-                        $dashRoute = route('admin.dashboard');
-                        $dashActive = request()->routeIs('admin.dashboard');
-                    }
+                    $dashRoute = ($role === 'mentor') ? route('mentor.dashboard') : route('admin.dashboard');
+                    $dashActive = ($role === 'mentor') ? request()->routeIs('mentor.dashboard') : request()->routeIs('admin.dashboard');
                 @endphp
 
                 <a href="{{ $dashRoute }}" class="nav-link {{ $dashActive ? 'active' : '' }}">
@@ -83,7 +92,6 @@
 
                 @if($role === 'admin' || $role === 'staff')
                     <div class="menu-label mt-4">Marketing & Konten</div>
-
                     <a href="{{ route('admin.testimonials.index') }}" class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
                         <i class="fas fa-quote-right"></i> <span>Testimoni</span>
                     </a>
@@ -110,7 +118,6 @@
 
                 @if($role === 'mentor')
                     <div class="menu-label mt-4">Area Pengajar</div>
-
                     <a href="{{ route('mentor.activity.index') }}" class="nav-link {{ request()->routeIs('mentor.activity.*') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-check"></i> <span>Aktivitas KBM</span>
                     </a>
@@ -119,43 +126,18 @@
                     </a>
                 @endif
 
-                {{-- ========================================= --}}
-                {{-- MENU ARSIP DIGITAL (AKSES SEMUA ROLE) --}}
-                {{-- ========================================= --}}
                 <div class="menu-label mt-4">Arsip Digital</div>
-
                 <a href="{{ route('admin.documents.index') }}" class="nav-link {{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                     <i class="fas fa-folder-open"></i> <span>Pusat Dokumen</span>
                 </a>
 
                 <div class="menu-label mt-4">Kepegawaian</div>
-
-                {{-- Menu Absensi (Sekarang untuk SEMUA ROLE) --}}
-                <a href="{{ route('admin.attendance.index') }}" class="nav-link {{ request()->routeIs('admin.attendance.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
-                    <div>
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Absensi Kantor</span>
-                    </div>
-
-                    @if($role === 'admin' && isset($attendanceNotification) && $attendanceNotification > 0)
-                        <span class="badge rounded-pill bg-danger animate-pulse" style="font-size: 0.65rem;">
-                            {{ $attendanceNotification }}
-                        </span>
-                    @endif
+                <a href="{{ route('admin.attendance.index') }}" class="nav-link {{ request()->routeIs('admin.attendance.*') ? 'active' : '' }}">
+                    <i class="fas fa-calendar-check"></i> <span>Absensi Kantor</span>
                 </a>
 
-                {{-- Menu Cuti (Semua Role) --}}
-                <a href="{{ route('admin.leaves.index') }}" class="nav-link {{ request()->routeIs('admin.leaves.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
-                    <div>
-                        <i class="fas fa-plane-departure"></i>
-                        <span>Pengajuan Cuti</span>
-                    </div>
-
-                    @if($role === 'admin' && isset($pendingLeaveCount) && $pendingLeaveCount > 0)
-                        <span class="badge rounded-pill bg-warning text-dark animate-pulse" style="font-size: 0.65rem;">
-                            {{ $pendingLeaveCount }}
-                        </span>
-                    @endif
+                <a href="{{ route('admin.leaves.index') }}" class="nav-link {{ request()->routeIs('admin.leaves.*') ? 'active' : '' }}">
+                    <i class="fas fa-plane-departure"></i> <span>Pengajuan Cuti</span>
                 </a>
 
                 <div class="menu-label mt-4">Keuangan</div>
@@ -170,7 +152,6 @@
                     <a href="{{ route('admin.programs.index') }}" class="nav-link {{ request()->routeIs('admin.programs.*') ? 'active' : '' }}">
                         <i class="fas fa-tags"></i> <span>Master Harga</span>
                     </a>
-
                     <div class="menu-label mt-4">Konfigurasi</div>
                     <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                         <i class="fas fa-users-cog"></i> <span>Manajemen User</span>
@@ -206,7 +187,55 @@
                 </div>
             </div>
 
-            <div class="admin-profile d-flex align-items-center gap-3">
+            <div class="admin-profile d-flex align-items-center gap-2 gap-md-3">
+
+                {{-- DROPDOWN NOTIFIKASI --}}
+                <div class="dropdown me-1 me-md-2">
+                    <button class="btn btn-icon-only position-relative border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell text-white fs-5"></i>
+                        @if(auth()->user()->unreadNotifications->count() > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger animate-pulse" style="font-size: 0.55rem; padding: 0.35em 0.5em;">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        @endif
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-notifications shadow-lg p-0">
+                        <div class="p-3 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 text-white fw-bold small">Notifikasi</h6>
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <form action="{{ route('admin.leaves.markAllRead') }}" method="POST" class="m-0">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link p-0 text-primary x-small text-decoration-none fw-bold">Tandai Semua Dibaca</button>
+                                </form>
+                            @endif
+                        </div>
+                        <div class="notification-list custom-scrollbar">
+                            @forelse(auth()->user()->unreadNotifications as $notification)
+                                <a href="{{ $notification->data['url'] ?? '#' }}" class="dropdown-item p-3 notification-item unread">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="icon-circle p-2 rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                                            <i class="{{ $notification->data['icon'] ?? 'fas fa-info-circle' }} text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <div class="text-white small fw-bold text-truncate">{{ $notification->data['title'] ?? 'Notifikasi Baru' }}</div>
+                                            <div class="text-secondary x-small mt-1">{{ $notification->data['message'] ?? '' }}</div>
+                                            <div class="text-muted x-small mt-1">{{ $notification->created_at->diffForHumans() }}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @empty
+                                <div class="p-4 text-center">
+                                    <i class="fas fa-bell-slash text-secondary opacity-25 fa-2x mb-2"></i>
+                                    <p class="text-secondary small mb-0">Tidak ada notifikasi baru</p>
+                                </div>
+                            @endforelse
+                        </div>
+                        <div class="p-2 border-top border-secondary border-opacity-25 text-center">
+                            <a href="{{ route('admin.leaves.index') }}" class="text-secondary x-small text-decoration-none">Lihat Semua Pengajuan</a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="text-end d-none d-md-block">
                     <div class="text-white fw-bold small">{{ auth()->user()->name ?? 'User' }}</div>
                     <div class="text-white-50 x-small text-uppercase">{{ auth()->user()->role ?? 'Role' }}</div>
@@ -231,7 +260,6 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('adminSidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            // PASTIKAN CLASS INI SAMA DENGAN DI CSS (@media max-width: 991.98px)
             sidebar.classList.toggle('mobile-active');
             overlay.classList.toggle('active');
         }
