@@ -1,61 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Beta Badri Education - Admin Panel & Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
-## About Laravel
+Beta Badri Education adalah platform manajemen internal yang dirancang untuk mengelola aktivitas akademik, operasional kantor, dan arsip digital. Sistem ini mendukung multi-role (Admin, Staff, Mentor) dengan fokus pada privasi data.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. 📌 Pusat Dokumen (Digital Sticky Notes)
+Sistem manajemen catatan pribadi yang inovatif dengan tampilan *sticky notes*.
+* **Privasi Total:** Setiap user hanya dapat melihat dan mengelola catatan miliknya sendiri.
+* **Lampiran Opsional:** Mendukung berbagai format file (PDF, Docs, ZIP, Gambar) sebagai lampiran catatan.
+* **Kategorisasi Visual:** Menggunakan warna-warni sticky notes untuk identifikasi cepat.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. 📍 Absensi GPS & Selfie
+Sistem kehadiran berbasis lokasi untuk verifikasi akurat.
+* **Geolokasi:** Mendeteksi koordinat staff secara real-time saat absen.
+* **Bukti Selfie:** Mewajibkan unggah foto lokasi/selfie sebagai bukti fisik kehadiran.
+* **Laporan Kerja:** Input ringkasan kegiatan harian dan bukti file sebelum pulang.
 
-## Learning Laravel
+### 3. 💸 Cashout & Pengeluaran
+Manajemen pengajuan dana operasional yang transparan.
+* **Approval System:** Pengajuan dana harus diverifikasi dan disetujui oleh Admin.
+* **Rekapitulasi:** Dashboard grafik dan tabel history pengeluaran bulanan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. 🎓 Manajemen Akademik
+* Pengelolaan database sekolah mitra dan data siswa.
+* Area Mentor untuk input aktivitas KBM dan nilai proyek.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🛠️ Teknologi
+* **Backend:** Laravel 12 (PHP 8.2)
+* **Frontend:** Bootstrap 5 & FontAwesome 6
+* **Data Handling:** Carbon, TomSelect, HTML5 Geolocation API
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalasi Cepat
+```bash
+git clone [https://github.com/RendiAbiem/betabadri_website.git](https://github.com/RendiAbiem/betabadri_website.git)
+composer install
+php artisan migrate
+php artisan storage:link
+php artisan serve
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Developed by Beta Badri Education © 2026.
