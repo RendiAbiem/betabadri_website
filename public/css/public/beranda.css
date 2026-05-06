@@ -995,7 +995,9 @@
     width: auto;
     max-width: 180px; /* Batas lebar maksimal agar tidak terlalu raksasa */
     object-fit: contain;
-    filter: brightness(1.1); /* Sedikit boost cahaya agar logo terlihat 'pop out' di background gelap */
+    filter: brightness(
+        1.1
+    ); /* Sedikit boost cahaya agar logo terlihat 'pop out' di background gelap */
     transition: all 0.3s ease;
 }
 
@@ -1889,4 +1891,52 @@
 }
 #testimonialModal .modal-body::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-tech, #38bdf8);
+}
+
+/* Gradient Warna untuk elemen Game Dev */
+
+.text-gradient-blue {
+    background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.level-card {
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    transition: transform 0.3s ease;
+}
+
+.level-card:hover {
+    transform: translateY(-10px);
+
+    border-color: #38bdf8;
+}
+
+.level-header {
+    padding: 10px 20px;
+
+    font-weight: bold;
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 0.9rem;
+
+    text-transform: uppercase;
+}
+
+.bg-blue-soft {
+    background: #1e3a8a;
+}
+
+.bg-purple-soft {
+    background: #581c87;
 }

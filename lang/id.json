@@ -235,5 +235,27 @@
     "Interactive Story": "Cerita Interaktif",
     "Personal Portfolio": "Portofolio Pribadi",
     "E-Commerce / App": "E-Commerce / Aplikasi",
-    "3D Adventure Game": "Game Petualangan 3D"
+    "3D Adventure Game": "Game Petualangan 3D",
+
+    "Game Dev Title": "Program Game Development - Beta Badri Education",
+    "Build Your Dream Games": "Bangun <br><span class=\"text-gradient-blue\">Game Impianmu</span>",
+    "Game Hero Desc": "Jangan hanya menjadi pemain, jadilah pembuatnya! Pelajari logika algoritma, desain karakter, hingga mempublikasikan game ciptaanmu sendiri ke platform dunia.",
+    "Why Game Dev?": "Mengapa Belajar Game Dev?",
+    "Why Game Dev Desc": "Membuat game adalah cara terbaik untuk melatih logika matematika dan kreativitas secara bersamaan. Di Beta Badri, siswa tidak hanya belajar coding, tetapi juga pemecahan masalah (problem solving) yang berguna untuk masa depan mereka.",
+    "Game Design Logic": "Logika Desain Game",
+    "2D & 3D Assets Design": "Desain Aset 2D & 3D",
+    "Algorithm & Data Structure": "Algoritma & Struktur Data",
+    "Publishing & Monetization": "Publikasi & Monetisasi",
+    "Career Path": "Jalur <span class=\"text-gradient-blue\">Karir</span>",
+    "Junior (Pemula)": "Junior (Pemula)",
+    "Senior (Professional)": "Senior (Profesional)",
+    "Phase 1 Desc": "Memahami konsep dasar pemrograman (Loop, Variable, Logic) menggunakan Scratch. Membuat game 2D pertama.",
+    "Phase 2 Desc": "Beralih dari blok ke teks dengan Python (Pygame). Belajar koordinat layar dan interaksi user.",
+    "Phase 3 Desc": "Menggunakan Construct 3 atau GDevelop. Belajar tentang gravitasi, collision, dan sistem nyawa (UI/HUD).",
+    "Phase 4 Desc": "Fokus pada pembuatan karakter (Pixel Art) dan background. Belajar animasi frame-by-frame untuk karakter game.",
+    "Phase 5 Desc": "Membangun game 3D profesional dengan Unity Engine. Mempelajari script C# yang kompleks dan optimasi game.",
+    "Realize Dream Question": "Wujudkan Game Impianmu!",
+    "Realize Dream Desc": "Bergabunglah dengan komunitas developer muda kami. Belajar, berkreasi, dan publikasikan karyamu.",
+    "Daftar Trial Class": "Daftar Kelas Uji Coba",
+    "Konsultasi Program": "Konsultasi Program"
 }

@@ -237,5 +237,27 @@
     "Interactive Story": "Interactive Story",
     "Personal Portfolio": "Personal Portfolio",
     "E-Commerce / App": "E-Commerce / App",
-    "3D Adventure Game": "3D Adventure Game"
+    "3D Adventure Game": "3D Adventure Game",
+
+    "Game Dev Title": "Game Development Program - Beta Badri Education",
+    "Build Your Dream Games": "Build Your <br><span class=\"text-gradient-blue\">Dream Games</span>",
+    "Game Hero Desc": "Don't just be a player, be the creator! Learn algorithm logic, character design, and publish your own games to global platforms.",
+    "Why Game Dev?": "Why Learn Game Development?",
+    "Why Game Dev Desc": "Creating games is the best way to train mathematical logic and creativity simultaneously. At Beta Badri, students don't just learn coding, but also problem-solving skills useful for their future.",
+    "Game Design Logic": "Game Design Logic",
+    "2D & 3D Assets Design": "2D & 3D Assets Design",
+    "Algorithm & Data Structure": "Algorithm & Data Structure",
+    "Publishing & Monetization": "Publishing & Monetization",
+    "Career Path": "Career <span class=\"text-gradient-blue\">Path</span>",
+    "Junior (Beginner)": "Junior (Beginner)",
+    "Senior (Professional)": "Senior (Professional)",
+    "Phase 1 Desc": "Understand basic programming concepts (Loop, Variable, Logic) using Scratch. Create your first 2D game.",
+    "Phase 2 Desc": "Transition from blocks to text with Python (Pygame). Learn screen coordinates and user interaction.",
+    "Phase 3 Desc": "Using Construct 3 or GDevelop. Learn about gravity, collision, and life systems (UI/HUD).",
+    "Phase 4 Desc": "Focus on character creation (Pixel Art) and backgrounds. Learn frame-by-frame animation for game characters.",
+    "Phase 5 Desc": "Build professional 3D games with Unity Engine. Learn complex C# scripts and game optimization.",
+    "Realize Dream Question": "Realize Your Dream Game!",
+    "Realize Dream Desc": "Join our young developer community. Learn, create, and publish your work.",
+    "Daftar Trial Class": "Register Trial Class",
+    "Konsultasi Program": "Program Consultation"
 }
