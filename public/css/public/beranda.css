@@ -974,67 +974,50 @@
 }
 
 /* =========================================
-   PARTNERSHIP SECTION (FINAL FIXED)
+   PARTNERSHIP SECTION (ULTRA CLEAN & TIGHT)
    ========================================= */
 
-.partners-section {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+/* Wadah utama menggunakan flex */
+.partner-flex-container {
+    gap: 10px; /* Jarak antar logo sangat rapat, silakan kecilkan ke 10px jika ingin lebih rapat */
 }
 
-/* 1. KOTAK PEMBUNGKUS LOGO (WRAPPER) */
-.partner-item-wrapper {
-    border-radius: 15px; /* Sudut membulat */
-    padding: 20px; /* Jarak dalam agar logo tidak mepet */
-    min-height: 180px; /* Tinggi minimum agar semua kotak seragam */
+.partner-logo-item {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.partner-img {
+    height: 172px; /* Ukuran Tinggi diperbesar agar detail terlihat jelas */
+    width: auto;
+    max-width: 180px; /* Batas lebar maksimal agar tidak terlalu raksasa */
+    object-fit: contain;
+    filter: brightness(1.1); /* Sedikit boost cahaya agar logo terlihat 'pop out' di background gelap */
     transition: all 0.3s ease;
 }
 
-/* Efek Hover pada Kotak */
-.partner-item-wrapper:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(67, 97, 238, 0.3); /* List biru saat hover */
-    transform: translateY(-5px); /* Naik sedikit */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+/* Interaksi Hover */
+.partner-logo-item:hover {
+    transform: scale(1.15);
+    z-index: 5;
 }
 
-/* 2. STYLING LOGO */
-.partner-logo-natural {
-    max-height: 120px; /* Ukuran Desktop Besar */
-    width: auto;
-    max-width: 100%;
-    object-fit: contain; /* Agar logo tidak gepeng */
-
-    /* Efek Hitam Putih (Default) */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animasi membal halus */
-}
-
-/* Efek Hover pada Logo (Berwarna & Zoom) */
-.partner-item-wrapper:hover .partner-logo-natural {
-    filter: grayscale(0%) opacity(1); /* Kembali berwarna */
-    transform: scale(1.1); /* Zoom in 10% */
-}
-
-/* 3. RESPONSIF MOBILE */
-@media (max-width: 991px) {
-    /* Judul Rata Tengah di Mobile */
-    .partners-section h6,
-    .partners-section h4 {
-        text-align: center;
+/* Responsif Mobile */
+@media (max-width: 768px) {
+    .partner-flex-container {
+        gap: 10px;
     }
-
-    /* Ukuran Logo Lebih Kecil di Mobile agar rapi */
-    .partner-logo-natural {
-        max-height: 80px;
+    .partner-img {
+        height: 80px; /* Ukuran mobile tetap nyaman di mata */
     }
+}
 
-    /* Tinggi kotak disesuaikan di mobile */
-    .partner-item-wrapper {
-        min-height: 140px;
-        padding: 15px;
+@media (max-width: 480px) {
+    .partner-img {
+        height: 60px;
     }
 }
 

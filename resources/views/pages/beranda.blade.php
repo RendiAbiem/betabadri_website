@@ -890,21 +890,19 @@
 
         <div class="container position-relative z-2">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h6 class="text-uppercase fw-bold text-cyan letter-spacing-2">{{ __('Trusted Partners') }}</h6>
-                <h4 class="text-white fw-bold mb-0">{!! __('Berkolaborasi dengan <span class="text-gradient-blue">Instansi Terbaik</span>') !!}</h4>
+                <h6 class="text-uppercase fw-bold text-cyan letter-spacing-2">TRUSTED PARTNERS</h6>
+                <h4 class="text-white fw-bold mb-0">Berkolaborasi dengan <span class="text-gradient-blue">Instansi Terbaik</span></h4>
             </div>
 
-            <div class="row g-4 justify-content-center" data-aos="fade-up" data-aos-delay="100">
+            <!-- Gunakan flex-wrap dan justify-center untuk merapatkan logo -->
+            <div class="d-flex flex-wrap justify-content-center align-items-center partner-flex-container" data-aos="fade-up" data-aos-delay="100">
                 @foreach($partners as $partner)
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <div class="h-100 d-flex align-items-center justify-content-center p-4 rounded-3 partner-item-wrapper">
+                    <div class="partner-logo-item">
                         <img src="{{ asset('storage/' . $partner->logo) }}"
                             alt="{{ $partner->name }}"
-                            class="img-fluid partner-logo-natural"
-                            title="{{ $partner->name }}"
-                            style="max-height: 160px; width: auto; object-fit: contain;">
+                            class="partner-img"
+                            title="{{ $partner->name }}">
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
