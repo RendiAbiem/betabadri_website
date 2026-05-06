@@ -190,5 +190,27 @@
     "Modular Question": "Does your child love Lego & Assembling?",
     "Modular Question Desc": "Channel their hobby into future technology expertise.",
     "Register Free Trial": "Register Free Trial",
-    "Ask Admin": "Ask Admin"
+    "Ask Admin": "Ask Admin",
+
+    "Electronic Program Title": "Electronic Robotics Program - Beta Badri Education",
+    "Mastering Electronics": "Mastering <br><span class=\"text-gradient-blue\">Electronics & IoT</span>",
+    "Electronic Hero Desc": "Elevate your skills to true engineer levels. Learn to assemble circuits, solder components, and program robot brains (Microcontrollers) using C++.",
+    "Why Electronic?": "Why Electronic Robotics?",
+    "Why Electronic Desc": "In the Industry 4.0 era, understanding both Hardware and Software (Coding) is crucial. This program bridges both. Students will learn how electricity works, how to read electronic schematics, and create Smart Home systems.",
+    "Microcontroller (Robot Brain)": "Microcontroller (Robot Brain)",
+    "Current & Voltage": "Electric Current & Voltage",
+    "Soldering & Wiring": "Soldering & Wiring",
+    "Skill Tiers": "Skill <span class=\"text-gradient-blue\">Levels</span>",
+    "Basic (Beginner)": "Basic (Beginner)",
+    "Intermediate": "Intermediate",
+    "Electronic Level 1 Desc": "Understanding resistors, capacitors, LEDs, and Ohm's law. Assembling simple circuits on a Breadboard.",
+    "Electronic Level 2 Desc": "Start using Arduino Uno. Learn text-based coding (not blocks) to control lights and sound.",
+    "Electronic Level 3 Desc": "Using light, temperature, and distance sensors while moving Servo motors. Automation logic (If/Else).",
+    "Electronic Level 4 Desc": "Building chassis, soldering motor drivers, and programming Line Follower or Obstacle Avoider robots.",
+    "Electronic Level 5 Desc": "Using ESP32/ESP8266. Connecting electronic devices to mobile phones (Blynk/Firebase) for Smart Homes.",
+    "Inventor Question": "Ready to Become a Young Inventor?",
+    "Inventor Desc": "Start your engineering journey today. Build your own sophisticated tools from scratch.",
+    "Register Consultation": "Register Consultation",
+    "3 Months": "3 Months",
+    "6 Months": "6 Months"
 }

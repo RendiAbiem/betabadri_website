@@ -188,5 +188,27 @@
     "Modular Question": "Anak Anda Suka Lego & Merakit?",
     "Modular Question Desc": "Salurkan hobi mereka menjadi keahlian teknologi masa depan.",
     "Register Free Trial": "Daftar Free Trial",
-    "Ask Admin": "Tanya Admin"
+    "Ask Admin": "Tanya Admin",
+
+    "Electronic Program Title": "Program Robotic Elektronika - Beta Badri Education",
+    "Mastering Electronics": "Kuasai <br><span class=\"text-gradient-blue\">Elektronika & IoT</span>",
+    "Electronic Hero Desc": "Tingkatkan skill ke level engineer sesungguhnya. Belajar merakit sirkuit, menyolder komponen, dan memprogram otak robot (Microcontroller) dengan bahasa C++.",
+    "Why Electronic?": "Kenapa Robotik Elektronika?",
+    "Why Electronic Desc": "Di era Industri 4.0, pemahaman tentang Hardware (Fisik) dan Software (Coding) sangat krusial. Program ini menjembatani keduanya. Siswa akan belajar bagaimana listrik bekerja, cara membaca skema elektronik, hingga membuat sistem Rumah Pintar (Smart Home).",
+    "Microcontroller (Robot Brain)": "Microcontroller (Otak Robot)",
+    "Current & Voltage": "Arus & Tegangan Listrik",
+    "Soldering & Wiring": "Soldering & Wiring",
+    "Skill Tiers": "Jenjang <span class=\"text-gradient-blue\">Keahlian</span>",
+    "Basic (Beginner)": "Basic (Pemula)",
+    "Intermediate": "Intermediate",
+    "Electronic Level 1 Desc": "Mengenal resistor, kapasitor, LED, dan hukum Ohm. Merakit rangkaian sederhana di Breadboard.",
+    "Electronic Level 2 Desc": "Mulai menggunakan Arduino Uno. Belajar coding text-based (bukan blok) untuk mengontrol lampu dan suara.",
+    "Electronic Level 3 Desc": "Menggunakan sensor cahaya, suhu, jarak, dan menggerakkan Servo motor. Logika otomatisasi (If/Else).",
+    "Electronic Level 4 Desc": "Membuat chassis, menyolder driver motor, dan memprogram robot Line Follower atau Obstacle Avoider.",
+    "Electronic Level 5 Desc": "Menggunakan ESP32/ESP8266. Menghubungkan alat elektronik ke HP (Blynk/Firebase) untuk Smart Home.",
+    "Inventor Question": "Siap Menjadi Inventor Muda?",
+    "Inventor Desc": "Mulailah perjalanan teknikmu hari ini. Bangun alat canggihmu sendiri dari nol.",
+    "Register Consultation": "Daftar Konsultasi",
+    "3 Months": "3 Bulan",
+    "6 Months": "6 Bulan"
 }
