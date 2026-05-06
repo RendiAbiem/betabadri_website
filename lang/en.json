@@ -191,6 +191,9 @@
     "Modular Question Desc": "Channel their hobby into future technology expertise.",
     "Register Free Trial": "Register Free Trial",
     "Ask Admin": "Ask Admin",
+    "Modular Beginner Desc": "Learn basic sensors, motion control, and robotic design.",
+    "Modular Intermediate Desc": "Focus on programming & sensors for detection and manipulation.",
+    "Modular Advanced Desc": "Advanced programming & sensor logic for complex robotics.",
 
     "Electronic Program Title": "Electronic Robotics Program - Beta Badri Education",
     "Mastering Electronics": "Mastering <br><span class=\"text-gradient-blue\">Electronics & IoT</span>",

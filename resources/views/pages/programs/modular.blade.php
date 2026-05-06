@@ -93,27 +93,68 @@
             </li>
         </ul>
 
-        <div class="tab-content" id="pills-tabContent">
-            <!-- JUNIOR TAB -->
+        <div class="tab-content" id="pills-tabContent" data-aos="fade-up" data-aos-delay="200">
+
+            <!-- PEMULA (JUNIOR) TAB -->
             <div class="tab-pane fade show active" id="pills-junior" role="tabpanel">
                 <div class="row g-4 justify-content-center">
                     <div class="col-lg-4">
                         <div class="level-card h-100">
-                            <div class="level-header bg-blue-soft">Level 1: Mechanic Basic</div>
+                            <div class="level-header bg-blue-soft">Level 1: Basic Systems</div>
                             <div class="p-4">
-                                <h4 class="text-white fw-bold">Structure & Gears</h4>
-                                <p class="text-white-50 small">{{ __('Modular Desc') }}</p>
+                                <h4 class="text-white fw-bold">Intro to Robotics</h4>
+                                <p class="text-white-50 small">{{ __('Modular Beginner Desc') }}</p>
                                 <hr class="border-secondary">
                                 <ul class="list-unstyled text-white-50 small mb-0">
                                     <li><i class="fas fa-clock me-2 text-cyan"></i> {{ __('3 Months (12 Meetings)') }}</li>
-                                    <li><i class="fas fa-trophy me-2 text-cyan"></i> {{ __('Project') }}: Catapult / Crane</li>
+                                    <li><i class="fas fa-trophy me-2 text-cyan"></i> {{ __('Project') }}: Smart Fan / Racing Car</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Bagian Senior dan Advance bisa disesuaikan dengan pola yang sama -->
+
+            <!-- MENENGAH (SENIOR) TAB -->
+            <div class="tab-pane fade" id="pills-senior" role="tabpanel">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="level-card h-100">
+                            <div class="level-header bg-purple-soft" style="background: #8b5cf6;">Level 2: Interaction</div>
+                            <div class="p-4">
+                                <h4 class="text-white fw-bold">Programming & Sensors</h4>
+                                <p class="text-white-50 small">{{ __('Modular Intermediate Desc') }}</p>
+                                <hr class="border-secondary">
+                                <ul class="list-unstyled text-white-50 small mb-0">
+                                    <li><i class="fas fa-clock me-2 text-cyan"></i> {{ __('3 Months (12 Meetings)') }}</li>
+                                    <li><i class="fas fa-trophy me-2 text-cyan"></i> {{ __('Project') }}: Color Sorter / Robotic Arm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LANJUTAN (ADVANCE) TAB -->
+            <div class="tab-pane fade" id="pills-advance" role="tabpanel">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="level-card h-100">
+                            <div class="level-header bg-danger-soft" style="background: #ef4444;">Level 3: Expert Logic</div>
+                            <div class="p-4">
+                                <h4 class="text-white fw-bold">Complex Manipulation</h4>
+                                <p class="text-white-50 small">{{ __('Modular Advanced Desc') }}</p>
+                                <hr class="border-secondary">
+                                <ul class="list-unstyled text-white-50 small mb-0">
+                                    <li><i class="fas fa-clock me-2 text-cyan"></i> {{ __('3 Months (12 Meetings)') }}</li>
+                                    <li><i class="fas fa-trophy me-2 text-cyan"></i> {{ __('Project') }}: Autonomous Rescue Bot</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
