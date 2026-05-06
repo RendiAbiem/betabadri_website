@@ -116,7 +116,7 @@
                     </a>
                 @endif
 
-                @if($role === 'mentor')
+                {{-- @if($role === 'mentor')
                     <div class="menu-label mt-4">Area Pengajar</div>
                     <a href="{{ route('mentor.activity.index') }}" class="nav-link {{ request()->routeIs('mentor.activity.*') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-check"></i> <span>Aktivitas KBM</span>
@@ -124,7 +124,7 @@
                     <a href="{{ route('mentor.grades.index') }}" class="nav-link {{ request()->routeIs('mentor.grades.*') ? 'active' : '' }}">
                         <i class="fas fa-star-half-alt"></i> <span>Input Nilai Project</span>
                     </a>
-                @endif
+                @endif --}}
 
                 <div class="menu-label mt-4">Arsip Digital</div>
                 <a href="{{ route('admin.documents.index') }}" class="nav-link {{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
