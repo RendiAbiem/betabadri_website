@@ -260,5 +260,17 @@
     "Realize Dream Question": "Wujudkan Game Impianmu!",
     "Realize Dream Desc": "Bergabunglah dengan komunitas developer muda kami. Belajar, berkreasi, dan publikasikan karyamu.",
     "Daftar Trial Class": "Daftar Kelas Uji Coba",
-    "Konsultasi Program": "Konsultasi Program"
+    "Konsultasi Program": "Konsultasi Program",
+
+    "Expert Instructors": "Instruktur Ahli",
+    "Meet The Masters": "Kenali Para <span class=\"text-gradient-blue\">Master</span>",
+    "Mentor Hero Desc": "Belajar langsung dari praktisi industri dan edukator berpengalaman.",
+    "All": "Semua",
+    "Want to Join as an Instructor?": "Ingin Bergabung Menjadi Pengajar?",
+    "Join Us Desc": "Jika kamu memiliki passion di bidang teknologi dan pendidikan, mari berkarya bersama kami.",
+    "Send CV": "Kirim CV",
+    "No mentor for this category": "Tidak ada mentor untuk kategori ini.",
+    "No mentor data displayed": "Belum ada data mentor yang ditampilkan.",
+    "Teacher": "Pengajar",
+    "Expert": "Ahli"
 }

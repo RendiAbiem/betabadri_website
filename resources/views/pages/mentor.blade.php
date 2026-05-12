@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Tim Pengajar - Beta Badri Education')
+@section('title', __('Expert Instructors') . ' - Beta Badri Education')
 
 @section('content')
 
 <section class="program-hero position-relative d-flex align-items-center justify-content-center text-center"
-         style="background-image: url('{{ asset('img/bg-mentor.jpg') }}');">
+         style="background-image: url('{{ asset('img/bg-mentor.jpg') }}'); min-height: 400px;">
     <div class="program-bg-overlay"></div>
     <div class="container position-relative z-2">
-        <span class="badge bg-cyan-soft text-cyan px-3 py-2 rounded-pill mb-3 fw-bold border border-info" data-aos="fade-down">Expert Instructors</span>
-        <h1 class="display-3 fw-bold text-white mb-3" data-aos="fade-up">Meet The <span class="text-gradient-blue">Masters</span></h1>
+        <span class="badge bg-cyan-soft text-cyan px-3 py-2 rounded-pill mb-3 fw-bold border border-info" data-aos="fade-down">{{ __('Expert Instructors') }}</span>
+        <h1 class="display-3 fw-bold text-white mb-3" data-aos="fade-up">{!! __('Meet The Masters') !!}</h1>
         <p class="lead text-white-50 mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
-            Belajar langsung dari praktisi industri dan edukator berpengalaman.
+            {{ __('Mentor Hero Desc') }}
         </p>
     </div>
 </section>
@@ -20,15 +20,14 @@
     <div class="glow-bg-left position-absolute top-0 start-0"></div>
 
     <div class="container py-5">
-
         <div class="row mb-5 justify-content-center" data-aos="fade-up">
             <div class="col-md-10 text-center">
                 <div class="d-inline-flex flex-wrap justify-content-center gap-2 p-1 rounded-pill bg-black-pearl border border-secondary" id="mentor-filters">
-                    <button class="btn btn-sm btn-active-cyan rounded-pill px-4 filter-btn" data-filter="all">All</button>
-                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="modular">Robotic Modular</button>
-                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="electronic">Robotic Electronic</button>
-                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="programming">Programming</button>
-                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="game">Game Dev</button>
+                    <button class="btn btn-sm btn-active-cyan rounded-pill px-4 filter-btn" data-filter="all">{{ __('All') }}</button>
+                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="modular">{{ __('Modular Robotics') }}</button>
+                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="electronic">{{ __('Electronic Robotics') }}</button>
+                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="programming">{{ __('Programming') }}</button>
+                    <button class="btn btn-sm btn-ghost text-white-50 rounded-pill px-3 filter-btn" data-filter="game">{{ __('Game Dev') }}</button>
                 </div>
             </div>
         </div>
@@ -38,44 +37,18 @@
             @php
                 $role = strtolower($mentor->role);
                 $classes = '';
-
-                // --- LOGIKA KATEGORI OTOMATIS BERDASARKAN ROLE ---
-
-                // 1. Game Development
-                if (str_contains($role, 'game') || str_contains($role, 'unity') || str_contains($role, '3d')) {
-                    $classes .= 'game ';
-                }
-
-                // 2. Programming
-                if (str_contains($role, 'coding') || str_contains($role, 'program') || str_contains($role, 'web') || str_contains($role, 'software')) {
-                    $classes .= 'programming ';
-                }
-
-                // 3. Robotic Modular (Keyword: Modular, Lego, atau Robotic umum)
-                if (str_contains($role, 'modular') || str_contains($role, 'lego')) {
-                    $classes .= 'modular ';
-                }
-
-                // 4. Robotic Electronic (Keyword: Electro, IoT, Arduino)
-                if (str_contains($role, 'electro') || str_contains($role, 'iot') || str_contains($role, 'arduino') || str_contains($role, 'mikro')) {
-                    $classes .= 'electronic ';
-                }
-
-                // Fallback: Jika role-nya hanya "Robotics Mentor" (tanpa spesifik Modular/Electro),
-                // Kita tampilkan di kedua kategori Robotik agar aman.
-                if (str_contains($role, 'robot') && !str_contains($role, 'modular') && !str_contains($role, 'electro')) {
-                    $classes .= 'modular electronic ';
-                }
+                if (str_contains($role, 'game') || str_contains($role, 'unity') || str_contains($role, '3d')) $classes .= 'game ';
+                if (str_contains($role, 'coding') || str_contains($role, 'program') || str_contains($role, 'web')) $classes .= 'programming ';
+                if (str_contains($role, 'modular') || str_contains($role, 'lego')) $classes .= 'modular ';
+                if (str_contains($role, 'electro') || str_contains($role, 'iot') || str_contains($role, 'arduino')) $classes .= 'electronic ';
+                if (str_contains($role, 'robot') && !str_contains($role, 'modular') && !str_contains($role, 'electro')) $classes .= 'modular electronic ';
             @endphp
 
-            <div class="col-lg-3 col-md-6 mentor-item {{ $classes }}" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-3 col-md-6 mentor-item {{ $classes }}" data-aos="fade-up">
                 <div class="mentor-card h-100">
-
                     <div class="mentor-img-wrapper position-relative overflow-hidden bg-dark">
                         @if($mentor->image)
-                            <img src="{{ asset('storage/' . $mentor->image) }}"
-                                 alt="{{ $mentor->name }}"
-                                 class="img-fluid w-100 h-100 object-fit-cover transition-scale">
+                            <img src="{{ asset('storage/' . $mentor->image) }}" alt="{{ $mentor->name }}" class="img-fluid w-100 h-100 object-fit-cover transition-scale">
                         @else
                             <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary bg-opacity-25 text-white-50">
                                 <i class="fas fa-user fa-3x"></i>
@@ -86,9 +59,7 @@
                     <div class="card-body p-4 text-center">
                         <h5 class="text-white fw-bold mb-1">{{ $mentor->name }}</h5>
                         <p class="text-cyan small mb-3 text-uppercase letter-spacing-1 fw-bold">{{ $mentor->role }}</p>
-
                         <div class="divider-small mx-auto mb-3"></div>
-
                         <div class="d-flex flex-wrap justify-content-center gap-2">
                             @if(str_contains($classes, 'game'))
                                 <span class="skill-badge">Unity</span> <span class="skill-badge">C#</span>
@@ -99,7 +70,7 @@
                             @elseif(str_contains($classes, 'modular'))
                                 <span class="skill-badge">Lego</span> <span class="skill-badge">Logic</span>
                             @else
-                                <span class="skill-badge">Expert</span> <span class="skill-badge">Teacher</span>
+                                <span class="skill-badge">{{ __('Expert') }}</span> <span class="skill-badge">{{ __('Teacher') }}</span>
                             @endif
                         </div>
                     </div>
@@ -107,19 +78,16 @@
             </div>
             @empty
             <div class="col-12 text-center text-white-50 py-5">
-                <div class="opacity-50">
-                    <i class="fas fa-users-slash fa-3x mb-3"></i>
-                    <p>Belum ada data mentor yang ditampilkan.</p>
-                </div>
+                <i class="fas fa-users-slash fa-3x mb-3"></i>
+                <p>{{ __('No mentor data displayed') }}</p>
             </div>
             @endforelse
         </div>
 
         <div id="no-mentor-msg" class="text-center text-white-50 py-5 d-none">
             <i class="far fa-sad-tear fa-2x mb-3 opacity-50"></i>
-            <p>Tidak ada mentor untuk kategori ini.</p>
+            <p>{{ __('No mentor for this category') }}</p>
         </div>
-
     </div>
 </section>
 
@@ -127,12 +95,12 @@
     <div class="container py-4">
         <div class="row align-items-center">
             <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0">
-                <h3 class="text-white fw-bold mb-2">Ingin Bergabung Menjadi Pengajar?</h3>
-                <p class="text-white-50 mb-0">Jika kamu memiliki passion di bidang teknologi dan pendidikan, mari berkarya bersama kami.</p>
+                <h3 class="text-white fw-bold mb-2">{{ __('Want to Join as an Instructor?') }}</h3>
+                <p class="text-white-50 mb-0">{{ __('Join Us Desc') }}</p>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
                 <a href="https://wa.me/6281376180003" class="btn btn-outline-light btn-lg px-5 rounded-pill">
-                    <i class="fas fa-paper-plane me-2"></i> Kirim CV
+                    <i class="fas fa-paper-plane me-2"></i> {{ __('Send CV') }}
                 </a>
             </div>
         </div>
