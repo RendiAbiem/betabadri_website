@@ -1,19 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Beta Badri Education')
+@section('title', __('Contact Us') . ' - Beta Badri Education')
 
 @section('content')
 
 <section class="program-hero position-relative d-flex align-items-center justify-content-center text-center"
-         style="background-image: url('{{ asset('img/contact.jpg') }}');">
-
+         style="background-image: url('{{ asset('img/contact.jpg') }}'); min-height: 400px;">
     <div class="program-bg-overlay"></div>
-
     <div class="container position-relative z-2">
         <span class="badge bg-cyan-soft text-cyan px-3 py-2 rounded-pill mb-3 fw-bold border border-info" data-aos="fade-down">24/7 Support</span>
-        <h1 class="display-3 fw-bold text-white mb-3" data-aos="fade-up">Hubungi <span class="text-gradient-blue">Kami</span></h1>
+        <h1 class="display-3 fw-bold text-white mb-3" data-aos="fade-up">{{ __('Contact Us') }}</h1>
         <p class="lead text-white-50 mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
-            Punya pertanyaan tentang kurikulum, biaya, atau jadwal kelas? Tim kami siap membantu Anda via WhatsApp atau Email.
+            {{ __('Contact Hero Desc') }}
         </p>
     </div>
 </section>
@@ -25,9 +23,9 @@
         <div class="row g-5">
 
             <div class="col-lg-5" data-aos="fade-right">
-                <h3 class="text-white fw-bold mb-4">Informasi Kontak</h3>
+                <h3 class="text-white fw-bold mb-4">{{ __('Contact Information') }}</h3>
                 <p class="text-white-50 mb-5">
-                    Jangan ragu untuk berkunjung ke center kami atau menghubungi kami melalui saluran digital berikut.
+                    {{ __('Contact Info Desc') }}
                 </p>
 
                 <div class="contact-box d-flex align-items-start gap-3 mb-4">
@@ -35,7 +33,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div>
-                        <h5 class="text-white fw-bold mb-1">Lokasi Center</h5>
+                        <h5 class="text-white fw-bold mb-1">{{ __('Center Location') }}</h5>
                         <p class="text-white-50 small mb-0">
                             Jl. Dirgantara Timur, Sidumulyo Tim.,<br>
                             Kec. Marpoyan Damai, Kota Pekanbaru, Riau 28289
@@ -48,9 +46,9 @@
                         <i class="fas fa-phone-alt text-success" style="color: #10b981 !important;"></i>
                     </div>
                     <div>
-                        <h5 class="text-white fw-bold mb-1">WhatsApp / Telepon</h5>
+                        <h5 class="text-white fw-bold mb-1">WhatsApp / {{ __('Chat Sekarang') }}</h5>
                         <p class="text-white-50 small mb-0">+62 813-7618-0003</p>
-                        <a href="https://wa.me/6281376180003" class="text-cyan small text-decoration-none">Chat Sekarang →</a>
+                        <a href="https://wa.me/6281376180003" class="text-cyan small text-decoration-none">{{ __('Chat Now') }} →</a>
                     </div>
                 </div>
 
@@ -59,13 +57,13 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div>
-                        <h5 class="text-white fw-bold mb-1">Email Resmi</h5>
+                        <h5 class="text-white fw-bold mb-1">{{ __('Official Email') }}</h5>
                         <p class="text-white-50 small mb-0">Ymnm000@hotmail.com</p>
                     </div>
                 </div>
 
                 <div class="mt-5">
-                    <h6 class="text-uppercase text-white-50 fw-bold small mb-3">Ikuti Kami</h6>
+                    <h6 class="text-uppercase text-white-50 fw-bold small mb-3">{{ __('Follow Us') }}</h6>
                     <div class="d-flex gap-3">
                         <a href="https://www.facebook.com/profile.php?id=61576559004159#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.tiktok.com/@betabadrieducation?lang=id-ID" class="social-btn" aria-label="Tiktok"><i class="fab fa-tiktok"></i></a>
@@ -73,76 +71,63 @@
                         <a href="https://www.instagram.com/betabadri_education/" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-lg-7" data-aos="fade-left">
                 <div class="contact-form-wrapper p-4 p-lg-5">
-                    <h3 class="text-white fw-bold mb-4">Kirim Pesan</h3>
+                    <h3 class="text-white fw-bold mb-4">{{ __('Send Message') }}</h3>
 
                     <form action="{{ route('contact.send') }}" method="POST">
                         @csrf
-
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="first-name" class="text-white-50 small mb-2">First Name</label>
+                                    <label for="first-name" class="text-white-50 small mb-2">{{ __('First Name') }}</label>
                                     <input type="text" id="first-name" name="first_name"
                                            class="form-control form-control-dark @error('first_name') is-invalid @enderror"
-                                           value="{{ old('first_name') }}" required placeholder="Nama Depan">
-                                    @error('first_name')
-                                        <div class="invalid-feedback text-danger small">{{ $message }}</div>
-                                    @enderror
+                                           value="{{ old('first_name') }}" required placeholder="{{ __('First Name') }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="last-name" class="text-white-50 small mb-2">Last Name</label>
+                                    <label for="last-name" class="text-white-50 small mb-2">{{ __('Last Name') }}</label>
                                     <input type="text" id="last-name" name="last_name"
                                            class="form-control form-control-dark"
-                                           value="{{ old('last_name') }}" placeholder="Nama Belakang">
+                                           value="{{ old('last_name') }}" placeholder="{{ __('Last Name') }}">
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="contact-email" class="text-white-50 small mb-2">Email Address *</label>
+                                    <label for="contact-email" class="text-white-50 small mb-2">{{ __('Email Address') }} *</label>
                                     <input type="email" id="contact-email" name="email"
                                            class="form-control form-control-dark @error('email') is-invalid @enderror"
-                                           value="{{ old('email') }}" required placeholder="email@anda.com">
-                                    @error('email')
-                                        <div class="invalid-feedback text-danger small">{{ $message }}</div>
-                                    @enderror
+                                           value="{{ old('email') }}" required placeholder="email@example.com">
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="message" class="text-white-50 small mb-2">Message</label>
+                                    <label for="message" class="text-white-50 small mb-2">{{ __('Message') }}</label>
                                     <textarea id="message" name="message" rows="5"
                                               class="form-control form-control-dark @error('message') is-invalid @enderror"
-                                              required placeholder="Tulis pesan Anda disini...">{{ old('message') }}</textarea>
-                                    @error('message')
-                                        <div class="invalid-feedback text-danger small">{{ $message }}</div>
-                                    @enderror
+                                              required placeholder="{{ __('Write your message here') }}">{{ old('message') }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-12 mt-4">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                                    <span class="text-white-50 small fst-italic">We'll reply via WhatsApp!</span>
+                                    <span class="text-white-50 small fst-italic">{{ __('Reply via WA') }}</span>
                                     <button type="submit" class="btn btn-cta-green px-4 py-3 fw-bold">
-                                        Send to WhatsApp <i class="fab fa-whatsapp ms-2"></i>
+                                        {{ __('Send to WhatsApp') }} <i class="fab fa-whatsapp ms-2"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </section>
